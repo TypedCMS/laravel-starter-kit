@@ -77,4 +77,27 @@ class BasicResolverTest extends TestCase
 
         $this->resolver->resolveByEndpoint('foos');
     }
+
+    /**
+     * @test
+     */
+    public function itResolvesWhenThePathDoesNotExist(): void
+    {
+        $resolver = new class extends BasicResolver {
+
+            protected function getPath(): string
+            {
+                return dirname(__DIR__, 3) . '/Fixture/NotRepositories';
+            }
+
+            protected function getNamespace(): string
+            {
+                return 'TypedCMS\\LaravelStarterKit\\Tests\\Fixture\\Repositories';
+            }
+        };
+
+        $repos = $resolver->resolveByBlueprint('foo');
+
+        $this->assertCount(0, $repos);
+    }
 }

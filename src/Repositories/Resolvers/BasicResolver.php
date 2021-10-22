@@ -12,6 +12,10 @@ use TypedCMS\LaravelStarterKit\Repositories\ConstructsRepository;
 use TypedCMS\LaravelStarterKit\Repositories\Repository;
 use TypedCMS\LaravelStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 use UnexpectedValueException;
+use function app;
+use function app_path;
+use function config;
+use function file_exists;
 
 class BasicResolver implements ResolvesRepositories
 {
@@ -59,13 +63,17 @@ class BasicResolver implements ResolvesRepositories
         if ($this->repos === null) {
 
             $this->repos = [];
+            $files = [];
 
-            $files = new RegexIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($this->getPath())
-                ),
-                '/\.php$/'
-            );
+            if (file_exists($this->getPath())) {
+
+                $files = new RegexIterator(
+                    new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($this->getPath())
+                    ),
+                    '/\.php$/'
+                );
+            }
 
             /** @var SplFileInfo $file */
             foreach ($files as $file) {

@@ -104,4 +104,27 @@ class BasicResolverTest extends TestCase
 
         $this->resolver->resolve('foo');
     }
+
+    /**
+     * @test
+     */
+    public function itResolvesWhenThePathDoesNotExist(): void
+    {
+        $resolver = new class extends BasicResolver {
+
+            protected function getPath(): string
+            {
+                return dirname(__DIR__, 3) . '/Fixture/NotModels';
+            }
+
+            protected function getNamespace(): string
+            {
+                return 'TypedCMS\\LaravelStarterKit\\Tests\\Fixture\\Models';
+            }
+        };
+
+        $model = $resolver->resolve('constructs:baz');
+
+        $this->assertInstanceOf(Construct::class, $model);
+    }
 }

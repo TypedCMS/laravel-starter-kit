@@ -13,6 +13,11 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use TypedCMS\LaravelStarterKit\Models\Construct;
 use TypedCMS\LaravelStarterKit\Models\Resolvers\Contracts\ResolvesModels;
 use UnexpectedValueException;
+use function app;
+use function app_path;
+use function config;
+use function file_exists;
+use function str_replace;
 
 class BasicResolver implements ResolvesModels
 {
@@ -70,13 +75,17 @@ class BasicResolver implements ResolvesModels
         if ($this->models === null) {
 
             $this->models = [];
+            $files = [];
 
-            $files = new RegexIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($this->getPath())
-                ),
-                '/\.php$/'
-            );
+            if (file_exists($this->getPath())) {
+
+                $files = new RegexIterator(
+                    new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($this->getPath())
+                    ),
+                    '/\.php$/'
+                );
+            }
 
             /** @var SplFileInfo $file */
             foreach ($files as $file) {
