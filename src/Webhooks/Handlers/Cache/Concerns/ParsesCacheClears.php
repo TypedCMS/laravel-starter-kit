@@ -7,15 +7,17 @@ namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns;
 use TypedCMS\LaravelStarterKit\Repositories\Repository;
 use function app;
 use function collect;
+use function in_array;
 
 trait ParsesCacheClears
 {
     /**
      * @param array<Repository> $repos
+     * @param array<class-string<Repository>> $handled
      *
      * @return array<Repository>
      */
-    protected function mergePropagatedClears(array $repos, string $event): array
+    protected function mergePropagatedClears(array $repos, string $event, array $handled = []): array
     {
         if (count($repos) === 0) {
             return $repos;
@@ -33,11 +35,14 @@ trait ParsesCacheClears
 
         $childRepos = $childClasses
             ->unique()
+            ->filter(static fn (string $class) => !in_array($class, $handled))
             ->map(static fn (string $class): ?Repository => $parentClasses->contains($class) ? null : app($class))
             ->filter()
             ->all();
 
-        return collect($this->mergePropagatedClears($childRepos, $event))
+        $updatedHandled = $parentClasses->merge($childClasses)->unique()->all();
+
+        return collect($this->mergePropagatedClears($childRepos, $event, $updatedHandled))
             ->merge($parentRepos)
             ->all();
     }
