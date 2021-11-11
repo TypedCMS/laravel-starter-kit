@@ -68,13 +68,13 @@ That's it! You're now connected to TypedCMS.
 To create a repository for a specific endpoint run:
 
 ```bash
-php artisan typedcms:make:repository MyRepo -e=endpoint
+php artisan typedcms:make:repository MyRepo -eendpoint
 ```
 
 Or for a specified blueprint and collection:
 
 ```bash
-php artisan typedcms:make:repository MyRepo -b='blueprint-name' -c='collection-name'
+php artisan typedcms:make:repository MyRepo -b'blueprint-name' -c'collection-name'
 ```
 
 The repositories will be your primary means of interacting with the TypedCMS 
@@ -135,13 +135,13 @@ $myRepo->mapi()->all();
 To create a model for a specific resource type run:
 
 ```bash
-php artisan typedcms:make:model MyModel -t='resource-name'
+php artisan typedcms:make:model MyModel -t'resource-name'
 ```
 
 Or for a specified blueprint:
 
 ```bash
-php artisan typedcms:make:model MyModel -b='blueprint-name'
+php artisan typedcms:make:model MyModel -b'blueprint-name'
 ```
 
 Generated models will be placed in the `app/Models` directory of your
