@@ -21,11 +21,6 @@ use function str_replace;
 
 class BasicResolver implements ResolvesModels
 {
-    /**
-     * @var array<ItemInterface>|null
-     */
-    protected ?array $models = null;
-
     public function resolve(string $type): ?ItemInterface
     {
         if ($type === 'constructs' || $type === 'globals') {
@@ -72,36 +67,33 @@ class BasicResolver implements ResolvesModels
      */
     protected function getModels(): array
     {
-        if ($this->models === null) {
+        $models = [];
+        $files = [];
 
-            $this->models = [];
-            $files = [];
+        if (file_exists($this->getPath())) {
 
-            if (file_exists($this->getPath())) {
-
-                $files = new RegexIterator(
-                    new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($this->getPath())
-                    ),
-                    '/\.php$/'
-                );
-            }
-
-            /** @var SplFileInfo $file */
-            foreach ($files as $file) {
-
-                /** @var object $model */
-                $model = app($this->getNamespace() . '\\' . $file->getBasename('.php'));
-
-                if (!$model instanceof ItemInterface) {
-                    throw new UnexpectedValueException('Resolved models must be instances of ' . ItemInterface::class);
-                }
-
-                $this->models[] = $model;
-            }
+            $files = new RegexIterator(
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($this->getPath())
+                ),
+                '/\.php$/'
+            );
         }
 
-        return $this->models;
+        /** @var SplFileInfo $file */
+        foreach ($files as $file) {
+
+            /** @var object $model */
+            $model = app($this->getNamespace() . '\\' . $file->getBasename('.php'));
+
+            if (!$model instanceof ItemInterface) {
+                throw new UnexpectedValueException('Resolved models must be instances of ' . ItemInterface::class);
+            }
+
+            $models[] = $model;
+        }
+
+        return $models;
     }
 
     protected function getPath(): string
