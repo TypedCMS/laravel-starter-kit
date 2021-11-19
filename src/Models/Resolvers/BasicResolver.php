@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Models\Resolvers;
 
+use DirectoryIterator;
 use Illuminate\Support\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -71,13 +72,7 @@ class BasicResolver implements ResolvesModels
         $files = [];
 
         if (file_exists($this->getPath())) {
-
-            $files = new RegexIterator(
-                new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($this->getPath())
-                ),
-                '/\.php$/'
-            );
+            $files = new RegexIterator(new DirectoryIterator($this->getPath()), '/\.php$/');
         }
 
         /** @var SplFileInfo $file */
