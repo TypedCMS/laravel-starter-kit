@@ -6,6 +6,7 @@ namespace TypedCMS\LaravelStarterKit;
 
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\TypeMapper as BaseTypeMapper;
+use TypedCMS\LaravelStarterKit\Models\Model;
 use TypedCMS\LaravelStarterKit\Models\Resolvers\Contracts\ResolvesModels;
 
 class TypeMapper extends BaseTypeMapper
@@ -14,14 +15,12 @@ class TypeMapper extends BaseTypeMapper
 
     public function hasMapping(string $type): bool
     {
-        $model = $this->resolver->resolve($type);
-
-        return $model !== null || parent::hasMapping($type);
+        return true;
     }
 
     public function getMapping(string $type): ItemInterface
     {
-        return $this->resolver->resolve($type) ?? parent::getMapping($type);
+        return $this->resolver->resolve($type) ?? (new Model())->setType($type);
     }
 }
 

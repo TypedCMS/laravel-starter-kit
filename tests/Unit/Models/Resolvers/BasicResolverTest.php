@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Tests\Unit\Models\Resolvers;
 
 use TypedCMS\LaravelStarterKit\Models\Construct;
+use TypedCMS\LaravelStarterKit\Models\Model;
 use TypedCMS\LaravelStarterKit\Models\Resolvers\BasicResolver;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Models\Foo;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Models\FooConstruct;
@@ -49,7 +50,7 @@ class BasicResolverTest extends TestCase
      */
     public function itResolvesNullByResourceTypeForModelsThatDontExist(): void
     {
-        $this->assertnull($this->resolver->resolve('baz'));
+        $this->assertNull($this->resolver->resolve('baz'));
     }
 
     /**

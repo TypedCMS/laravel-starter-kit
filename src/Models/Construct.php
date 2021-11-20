@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Models;
 
 use Closure;
-use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Meta;
 use TypedCMS\LaravelStarterKit\Models\Resolvers\Contracts\ResolvesModels;
 use UnexpectedValueException;
 
-class Construct extends Item
+/**
+ * @property string $identifier
+ */
+class Construct extends Model
 {
     /**
      * @var string
