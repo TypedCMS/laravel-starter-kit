@@ -26,6 +26,7 @@ use TypedCMS\LaravelStarterKit\Console\Commands\MakeModelCommand;
 use TypedCMS\LaravelStarterKit\Console\Commands\MakeRepositoryCommand;
 use TypedCMS\LaravelStarterKit\Console\Commands\MakeWebhooksControllerCommand;
 use TypedCMS\LaravelStarterKit\Console\Commands\MakeWebhooksHandlerCommand;
+use TypedCMS\LaravelStarterKit\Console\Commands\RefreshTokenCommand;
 use TypedCMS\LaravelStarterKit\Models\Resolvers\Contracts\ResolvesModels;
 use TypedCMS\LaravelStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 use TypedCMS\LaravelStarterKit\TypeMapper;
@@ -84,6 +85,7 @@ class StarterKitServiceProvider extends ServiceProvider
         $this->commands(MakeModelCommand::class);
         $this->commands(MakeWebhooksControllerCommand::class);
         $this->commands(MakeWebhooksHandlerCommand::class);
+        $this->commands(RefreshTokenCommand::class);
     }
 
     protected function bindHttpClient(): void
