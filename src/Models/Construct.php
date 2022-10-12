@@ -41,6 +41,8 @@ class Construct extends Model
     }
 
     /**
+     * @deprecated
+     *
      * @return Construct|$this
      */
     public function specialize(): Construct|static
@@ -60,6 +62,8 @@ class Construct extends Model
     }
 
     /**
+     * @deprecated
+     *
      * @return $this
      */
     public function hydrateSpecializedModel(Construct $construct, Closure $pipe): static
@@ -73,6 +77,9 @@ class Construct extends Model
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     protected function getResolver(): ResolvesModels
     {
         return app(ResolvesModels::class);
