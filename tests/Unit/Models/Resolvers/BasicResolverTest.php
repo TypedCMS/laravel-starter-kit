@@ -97,13 +97,11 @@ class BasicResolverTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsAnExceptionWhenEncounteringInvalidModels(): void
+    public function itSkipsInvalidModels(): void
     {
-        $this->expectException(UnexpectedValueException::class);
-
         $this->app->instance(Foo::class, new class {});
 
-        $this->resolver->resolve('foo');
+        $this->assertNull($this->resolver->resolve('foo'));
     }
 
     /**

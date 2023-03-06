@@ -82,7 +82,7 @@ class BasicResolver implements ResolvesModels
             $model = app($this->getNamespace() . '\\' . $file->getBasename('.php'));
 
             if (!$model instanceof ItemInterface) {
-                throw new UnexpectedValueException('Resolved models must be instances of ' . ItemInterface::class);
+                continue;
             }
 
             $models[] = $model;
