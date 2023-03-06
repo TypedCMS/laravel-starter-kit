@@ -10,4 +10,4 @@ source package developers and contributors on which it is built.
 
 ## Installation & Usage Instructions
 
-See the [quickstart guide](https://typedcms.com/technologies/laravelhttps://typedcms.com/technologies/laravel) for installation and usage instructions.
+See the [quickstart guide](https://typedcms.com/technologies/laravel) for installation and usage instructions.
