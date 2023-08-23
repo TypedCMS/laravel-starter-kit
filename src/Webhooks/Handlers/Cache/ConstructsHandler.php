@@ -32,7 +32,7 @@ class ConstructsHandler extends Handler
             }
 
             $traveler->addResult(
-                $cleared ? 'Constructs Cache Cleared!' : 'No cacheable constructs repositories are configured. No action taken.',
+                $cleared ? 'Constructs Cache Cleared!' : 'No cacheable construct repositories are configured. No action taken.',
             );
         }
 
