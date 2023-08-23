@@ -21,7 +21,15 @@ class ConstructsHandler extends Handler
     {
         if ($this->isClearable($traveler)) {
 
-            $cleared = $this->clearCaches($this->getClearableRepositories($traveler));
+            $repos = $this->getClearableRepositories($traveler);
+
+            $cleared = $this->clearCaches($repos);
+
+            if ($cleared) {
+                foreach ($repos as $repo) {
+                    $traveler->addResult('Cleared Constructs Repo: '.$repo::class);
+                }
+            }
 
             $traveler->addResult(
                 $cleared ? 'Constructs Cache Cleared!' : 'No cacheable constructs repositories are configured. No action taken.',

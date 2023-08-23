@@ -20,9 +20,16 @@ class EndpointHandler extends Handler
     {
         if ($this->isClearable($traveler)) {
 
-            $cleared = $this->clearCaches($this->getClearableRepositories($traveler));
+            $repos = $this->getClearableRepositories($traveler);
+
+            $cleared = $this->clearCaches($repos);
 
             if ($cleared) {
+
+                foreach ($repos as $repo) {
+                    $traveler->addResult('Cleared Repo: '.$repo::class);
+                }
+
                 $traveler->addResult('Other Caches Cleared!');
             }
         }
