@@ -18,9 +18,9 @@ class ConstructsRepository extends Repository
     /**
      * @param array<string, mixed> $parameters
      */
-    public function hierarchy(array $parameters = []): Collection
+    public function hierarchy(string $identifier, array $parameters = []): Collection
     {
-        $document = $this->all($parameters);
+        $document = $this->all(['hierarchy' => $identifier] + $parameters);
 
         /** @var Collection<int, Construct> $constructs */
         $constructs = $document->getData();
