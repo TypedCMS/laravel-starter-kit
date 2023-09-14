@@ -11,6 +11,8 @@ use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
 trait CachesResponses
 {
+    private bool $skipCache = false;
+
     public function clearCache(string ...$tags): void
     {
         $cache = $this->getCache();
@@ -26,6 +28,16 @@ trait CachesResponses
 
             $cache->clear();
         }
+    }
+
+    /**
+     * @return $this
+     */
+    public function skipCache(bool $skip = true): static
+    {
+        $this->skipCache = $skip;
+
+        return $this;
     }
 
     protected function getCachePrefix(): ?string
@@ -66,7 +78,9 @@ trait CachesResponses
 
     protected function shouldCache(): bool
     {
-        return $this instanceof Cacheable && config('typedcms.enable_caching', false);
+        return $this instanceof Cacheable &&
+            config('typedcms.enable_caching', false) &&
+            !$this->skipCache;
     }
 
     protected function cache(string $key, Closure $callback): mixed
