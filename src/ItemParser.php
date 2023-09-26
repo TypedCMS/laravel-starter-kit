@@ -46,11 +46,17 @@ class ItemParser extends BaseItemParser
     {
         if (
             property_exists($document, 'type') &&
-            $document->type === 'constructs' &&
             property_exists($document, 'meta') &&
             property_exists($document->meta, 'type')
         ) {
-            $document->type = 'constructs:' . $document->meta->type;
+
+            if ($document->type === 'globals') {
+                $document->type = 'globals:' . $document->meta->type;
+            }
+
+            if ($document->type === 'constructs') {
+                $document->type = 'constructs:' . $document->meta->type;
+            }
         }
 
         return $document;

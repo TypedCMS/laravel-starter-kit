@@ -6,16 +6,15 @@ namespace TypedCMS\LaravelStarterKit\Models\Resolvers;
 
 use DirectoryIterator;
 use Illuminate\Support\Str;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use RegexIterator;
 use SplFileInfo;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use TypedCMS\LaravelStarterKit\Models\Construct;
 use TypedCMS\LaravelStarterKit\Models\Resolvers\Contracts\ResolvesModels;
-use UnexpectedValueException;
+
 use function app;
 use function app_path;
+use function compact;
 use function config;
 use function file_exists;
 use function str_replace;
@@ -32,13 +31,17 @@ class BasicResolver implements ResolvesModels
             return $this->resolveByConstructsPath(str_replace('constructs:', '', $type));
         }
 
+        if (Str::startsWith($type, 'globals:')) {
+            return $this->resolveByConstructsPath(str_replace('globals:', '', $type), true);
+        }
+
         return $this->resolveByType($type);
     }
 
-    public function resolveByConstructsPath(string $blueprint): Construct
+    public function resolveByConstructsPath(string $blueprint, bool $global = false): Construct
     {
 
-        foreach ($this->getModels() as $model) {
+        foreach ($this->getModels($global) as $model) {
 
             if (
                 $model instanceof Construct &&
@@ -48,7 +51,7 @@ class BasicResolver implements ResolvesModels
             }
         }
 
-        return new Construct();
+        return new Construct([], $global);
     }
 
     public function resolveByType(string $type): ?ItemInterface
@@ -66,7 +69,7 @@ class BasicResolver implements ResolvesModels
     /**
      * @return array<ItemInterface>
      */
-    protected function getModels(): array
+    protected function getModels(bool $global = false): array
     {
         $models = [];
         $files = [];
@@ -79,7 +82,10 @@ class BasicResolver implements ResolvesModels
         foreach ($files as $file) {
 
             /** @var object $model */
-            $model = app($this->getNamespace() . '\\' . $file->getBasename('.php'));
+            $model = app(
+                $this->getNamespace() . '\\' . $file->getBasename('.php'),
+                compact('global'),
+            );
 
             if (!$model instanceof ItemInterface) {
                 continue;

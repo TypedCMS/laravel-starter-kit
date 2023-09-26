@@ -21,6 +21,19 @@ class Construct extends Model
 
     protected string $blueprint;
 
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function __construct(array $attributes = [], private bool $global = false)
+    {
+        parent::__construct($attributes);
+    }
+
+    public function isGlobal(): bool
+    {
+        return $this->global;
+    }
+
     public function getBlueprint(): string
     {
         return $this->blueprint;

@@ -97,6 +97,32 @@ class BasicResolverTest extends TestCase
     /**
      * @test
      */
+    public function itResolvesASpecialisedGlobalModelByResourceTypePath(): void
+    {
+        /** @var FooConstruct $model */
+        $model = $this->resolver->resolve('globals:foo');
+
+        $this->assertInstanceOf(FooConstruct::class, $model);
+
+        $this->assertTrue($model->isGlobal());
+    }
+
+    /**
+     * @test
+     */
+    public function itResolvesAGenericGlobalsModelByResourceTypePath(): void
+    {
+        /** @var Construct $model */
+        $model = $this->resolver->resolve('globals:baz');
+
+        $this->assertInstanceOf(Construct::class, $model);
+
+        $this->assertTrue($model->isGlobal());
+    }
+
+    /**
+     * @test
+     */
     public function itSkipsInvalidModels(): void
     {
         $this->app->instance(Foo::class, new class {});
