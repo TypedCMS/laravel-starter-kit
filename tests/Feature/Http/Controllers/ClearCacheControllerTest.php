@@ -271,7 +271,6 @@ class ClearCacheControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
-            'messages' => ['Constructs Cache Cleared!'],
         ]);
     }
 
@@ -324,7 +323,6 @@ class ClearCacheControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
-            'messages' => ['Constructs Cache Cleared!'],
         ]);
     }
 
@@ -351,7 +349,7 @@ class ClearCacheControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'status' => 'success',
-            'messages' => ['No cacheable constructs repositories are configured. No action taken.'],
+            'messages' => ['No cacheable construct repositories are configured. No action taken.'],
         ]);
     }
 
