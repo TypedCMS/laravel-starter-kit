@@ -83,6 +83,9 @@ trait CachesResponses
             !$this->skipCache;
     }
 
+    /**
+     * @param Closure(): mixed $callback
+     */
     protected function cache(string $key, Closure $callback): mixed
     {
         if (!$this->shouldCache()) {

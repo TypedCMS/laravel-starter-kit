@@ -17,18 +17,18 @@ trait PropagatesCacheClearing
     public function getCacheClears(string $event): array
     {
         return collect($this->clears ?? [])
-            ->mapWithKeys(fn (string|array $value, int|string $key): array => $this->normalise($value, $key))
-            ->filter(fn (string|array $value): bool => $this->clearsOnEvent($event, $value))
+            ->mapWithKeys(fn (array|string $value, int|string $key): array => $this->normalise($value, $key))
+            ->filter(fn (array $value): bool => $this->clearsOnEvent($event, $value))
             ->keys()
             ->all();
     }
 
     /**
-     * @param string|array<string> $value
+     * @param array<string>|class-string $value
      *
-     * @return array<string, array<string>>
+     * @return array<class-string, array<string>>
      */
-    protected function normalise(string|array $value, int|string $key): array
+    protected function normalise(array|string $value, int|string $key): array
     {
         if ($this->isClassString($value)) {
             return [$value => ['update', 'delete', 'react']];
@@ -46,9 +46,9 @@ trait PropagatesCacheClearing
     }
 
     /**
-     * @param array<string>|int|string $test
+     * @param array<string>|class-string $test
      */
-    protected function isClassString(array|int|string $test): bool
+    protected function isClassString(array|string $test): bool
     {
         return is_string($test) && class_exists($test);
     }

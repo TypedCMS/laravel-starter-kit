@@ -18,8 +18,8 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "illuminate/collections": "^8.0|^9.0|^10.0",
-        "illuminate/contracts": "^8.0|^9.0|^10.0",
+        "illuminate/collections": "^9.0|^10.0",
+        "illuminate/contracts": "^9.0|^10.0",
         "guzzlehttp/guzzle": "^7.0",
         "kamermans/guzzle-oauth2-subscriber": "^1.0",
         "swisnl/json-api-client": "^2.3"
@@ -27,9 +27,9 @@
     "require-dev": {
         "php-http/mock-client": "^1.2",
         "phpunit/phpunit": "^9.5",
-        "orchestra/testbench": "^6.16",
-        "phpstan/phpstan": "^0.12.99",
-        "nunomaduro/larastan": "^0.7.12"
+        "orchestra/testbench": "^v8.12.2",
+        "phpstan/phpstan": "^1.10.38",
+        "nunomaduro/larastan": "^v2.6.4"
     },
     "autoload": {
         "psr-4": {
@@ -38,12 +38,30 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TypedCMS\\LaravelStarterKit\\Tests\\": "tests/"
+            "TypedCMS\\LaravelStarterKit\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "scripts": {
         "post-autoload-dump": [
+            "@clear",
+            "@prepare",
             "@php ./vendor/bin/testbench package:discover --ansi"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse"
+        ],
+        "test": [
+            "@php vendor/bin/phpunit"
         ]
     },
     "extra": {

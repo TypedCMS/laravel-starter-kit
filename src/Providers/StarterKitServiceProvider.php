@@ -39,12 +39,12 @@ class StarterKitServiceProvider extends ServiceProvider
 
     public static function setTokenPath(string $path): void
     {
-        static::$tokenPath = $path;
+        self::$tokenPath = $path;
     }
 
     public static function getTokenPath(): string
     {
-        return (static::$tokenPath === null ? storage_path('app') : static::$tokenPath).'/token.txt';
+        return (self::$tokenPath === null ? storage_path('app') : self::$tokenPath).'/token.txt';
     }
 
     public function register(): void

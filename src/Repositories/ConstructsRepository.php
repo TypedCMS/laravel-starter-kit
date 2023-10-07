@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Repositories;
 
 use Illuminate\Support\Collection;
-use stdClass;
 use TypedCMS\LaravelStarterKit\Models\Construct;
 
 use function collect;
@@ -19,7 +18,7 @@ class ConstructsRepository extends Repository
     /**
      * @param array<string, mixed> $parameters
      *
-     * @return Collection<int, stdClass>
+     * @return Collection<int, covariant object>
      */
     public function hierarchy(string $identifier, array $parameters = []): Collection
     {
@@ -59,7 +58,7 @@ class ConstructsRepository extends Repository
      * @param array<mixed> $tree
      * @param Collection<int, Construct> $constructs
      *
-     * @return Collection<int, stdClass>
+     * @return Collection<int, covariant object>
      */
     protected function traverseHierarchy(array $tree, Collection $constructs): Collection
     {

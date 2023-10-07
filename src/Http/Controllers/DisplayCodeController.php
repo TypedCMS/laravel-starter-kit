@@ -6,6 +6,7 @@ namespace TypedCMS\LaravelStarterKit\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use function is_string;
 
 class DisplayCodeController extends Controller
 {
@@ -15,6 +16,8 @@ class DisplayCodeController extends Controller
             abort(404);
         }
 
-        return $request->query('code');
+        $code = $request->query('code');
+
+        return is_string($code) ? $code : 'invalid';
     }
 }
