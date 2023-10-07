@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
+
 use function dirname;
 
 class MakeWebhooksHandlerCommand extends GeneratorCommand
@@ -15,6 +17,15 @@ class MakeWebhooksHandlerCommand extends GeneratorCommand
 
     protected $type = 'Handler';
 
+    /**
+     * @return array<array<int|string>>
+     */
+    protected function getOptions(): array
+    {
+        return [
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the handler already exists'],
+        ];
+    }
 
     protected function getStub(): string
     {
@@ -23,7 +34,7 @@ class MakeWebhooksHandlerCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\Http\\Controllers\\Webhooks\\Handlers';
+        return $rootNamespace . '\\Webhooks\\Handlers';
     }
 
     protected function getStubPath(string $stub): string

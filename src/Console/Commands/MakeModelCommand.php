@@ -6,6 +6,7 @@ namespace TypedCMS\LaravelStarterKit\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+
 use function dirname;
 use function str_replace;
 
@@ -25,6 +26,7 @@ class MakeModelCommand extends GeneratorCommand
         return [
             ['type', 't', InputOption::VALUE_REQUIRED, 'Specify the generated model\'s resource type'],
             ['blueprint', 'b', InputOption::VALUE_REQUIRED, 'Specify the generated model\'s blueprint'],
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists'],
         ];
     }
 

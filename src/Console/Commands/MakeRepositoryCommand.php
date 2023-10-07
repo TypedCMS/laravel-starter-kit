@@ -6,6 +6,7 @@ namespace TypedCMS\LaravelStarterKit\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+
 use function dirname;
 use function str_replace;
 
@@ -27,6 +28,7 @@ class MakeRepositoryCommand extends GeneratorCommand
             ['collection', 'c', InputOption::VALUE_REQUIRED, 'Specify the generated repository\'s collection'],
             ['blueprint', 'b', InputOption::VALUE_REQUIRED, 'Specify the generated repository\'s blueprint'],
             ['not-cacheable', 'N', InputOption::VALUE_NONE, 'Indicated the generated repository should not be cacheable'],
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the repository already exists'],
         ];
     }
 

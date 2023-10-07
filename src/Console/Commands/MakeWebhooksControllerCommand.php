@@ -6,6 +6,7 @@ namespace TypedCMS\LaravelStarterKit\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+
 use function dirname;
 use function str_replace;
 
@@ -24,6 +25,7 @@ class MakeWebhooksControllerCommand extends GeneratorCommand
     {
         return [
             ['webhook', 'w', InputOption::VALUE_REQUIRED, 'Specify the generated controller\'s webhook name'],
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the controller already exists'],
         ];
     }
 
