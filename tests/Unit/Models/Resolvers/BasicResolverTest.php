@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Tests\Unit\Models\Resolvers;
 
-use TypedCMS\LaravelStarterKit\Models\Construct;
-use TypedCMS\LaravelStarterKit\Models\Model;
-use TypedCMS\LaravelStarterKit\Models\Resolvers\BasicResolver;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Models\Foo;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Models\FooConstruct;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
-use UnexpectedValueException;
+use TypedCMS\PHPStarterKit\Models\Construct;
+use TypedCMS\PHPStarterKit\Models\Resolvers\BasicResolver;
+
 use function dirname;
 
 class BasicResolverTest extends TestCase

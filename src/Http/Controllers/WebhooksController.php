@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Contracts\HandlesWebhook;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Result;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Traveler;
+
 use function collect;
 use function count;
 use function response;

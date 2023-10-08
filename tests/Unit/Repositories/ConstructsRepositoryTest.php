@@ -6,9 +6,10 @@ namespace TypedCMS\LaravelStarterKit\Tests\Unit\Repositories;
 
 use Swis\JsonApi\Client\DocumentFactory;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
-use TypedCMS\LaravelStarterKit\Repositories\Concerns\DeterminesEndpoint;
+use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableConstructsRepository;
+use TypedCMS\PHPStarterKit\Repositories\Concerns\DeterminesEndpoint;
 
 class ConstructsRepositoryTest extends TestCase
 {
@@ -16,17 +17,14 @@ class ConstructsRepositoryTest extends TestCase
 
     private string $mapiEndpoint;
 
-    public function setUp(): void
+    public function defineEnvironment($app): void
     {
-        parent::setUp();
-
         $this->apiEndpoint = DeterminesEndpoint::$apiEndpoint;
         $this->mapiEndpoint = DeterminesEndpoint::$mapiEndpoint;
 
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set('typedcms.base_uri', '@foo/bar');
+        $app['config']->set('typedcms.base_uri', '@foo/bar');
+
+        StarterKitServiceProvider::configurePHPStarterKit();
     }
 
     /**

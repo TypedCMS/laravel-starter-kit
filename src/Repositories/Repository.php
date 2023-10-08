@@ -6,27 +6,19 @@ namespace TypedCMS\LaravelStarterKit\Repositories;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
-use RuntimeException;
+use Swis\JsonApi\Client\Error;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
-use Swis\JsonApi\Client\InvalidResponseDocument;
-use Swis\JsonApi\Client\Repository as BaseRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TypedCMS\LaravelStarterKit\Repositories\Concerns\CachesResponses;
-use TypedCMS\LaravelStarterKit\Repositories\Concerns\DeterminesEndpoint;
 use TypedCMS\LaravelStarterKit\Repositories\Concerns\PropagatesCacheClearing;
+use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
+use TypedCMS\PHPStarterKit\Repositories\Repository as BaseRepository;
 
 abstract class Repository extends BaseRepository
 {
-    use DeterminesEndpoint;
     use CachesResponses;
     use PropagatesCacheClearing;
-
-    /**
-     * By default, repositories make requests to the delivery api. Set this to
-     * true if you wish to use the management api by default.
-     */
-    protected bool $mapi = false;
 
     protected ?string $cachePrefix = null;
 
@@ -34,7 +26,7 @@ abstract class Repository extends BaseRepository
      * When this repository's cache is cleared, repositories listed here will
      * also be cleared.
      *
-     * @var array<class-string<Repository>>|array<class-string<Repository>, array<string>>
+     * @var array<class-string<Cacheable>>|array<class-string<Cacheable>, array<string>>
      */
     protected array $clears = [];
 
@@ -57,7 +49,7 @@ abstract class Repository extends BaseRepository
 
         $key = $this->getCacheKey('all', $parameters);
 
-        return $this->cache($key, fn () => $this->handleErrors(parent::all($parameters), strict: true));
+        return $this->cache($key, fn () => parent::all($parameters));
     }
 
     /**
@@ -69,11 +61,11 @@ abstract class Repository extends BaseRepository
     {
         $page = LengthAwarePaginator::resolveCurrentPage();
 
-        $parameters += ['page[number]' => $page];
+        $parameters += ['all' => false, 'page[number]' => $page];
 
         $key = $this->getCacheKey('paginated', $parameters);
 
-        $document = $this->cache($key, fn () => $this->handleErrors(parent::all($parameters), strict: true));
+        $document = $this->cache($key, fn () => parent::all($parameters));
 
         return new LengthAwarePaginator(
             $document->getData(),
@@ -91,7 +83,7 @@ abstract class Repository extends BaseRepository
     {
         $key = $this->getCacheKey('take', $parameters);
 
-        return $this->cache($key, fn () => $this->handleErrors(parent::take($parameters), strict: true));
+        return $this->cache($key, fn () => parent::take($parameters));
     }
 
     /**
@@ -101,7 +93,7 @@ abstract class Repository extends BaseRepository
     {
         $key = $this->getCacheKey('find', $parameters, $id);
 
-        return $this->cache($key, fn () => $this->handleErrors(parent::find($id, $parameters)));
+        return $this->cache($key, fn () => parent::find($id, $parameters));
     }
 
     /**
@@ -111,50 +103,17 @@ abstract class Repository extends BaseRepository
     {
         $key = $this->getCacheKey('findOrFail', $parameters, $id);
 
-        return $this->cache($key, fn () => $this->handleErrors(parent::find($id, $parameters), fail: true));
+        return $this->cache($key, fn () => parent::findOrFail($id, $parameters));
     }
 
-    /**
-     * @param array<string, mixed> $parameters
-     */
-    public function save(ItemInterface $item, array $parameters = []): DocumentInterface
+    protected function handle404Error(DocumentInterface $document): void
     {
-        $this->mapi();
-
-        return parent::save($item, $parameters);
+        throw new NotFoundHttpException();
     }
 
-    /**
-     * @param array<string, mixed> $parameters
-     */
-    public function delete(string $id, array $parameters = []): DocumentInterface
+    protected function logError(Error $error): void
     {
-        $this->mapi();
-
-        return parent::delete($id, $parameters);
-    }
-
-    protected function handleErrors(DocumentInterface $document, bool $fail = false, bool $strict = false): DocumentInterface
-    {
-        if ($document instanceof InvalidResponseDocument || $document->hasErrors()) {
-
-            if (!$strict && $document->getResponse()->getStatusCode() === 404) {
-
-                if ($fail) {
-                    throw new NotFoundHttpException();
-                }
-
-                return $document;
-            }
-
-            foreach ($document->getErrors() as $error) {
-                Log::error('[' . $error->getStatus() . '] ' . $error->getDetail());
-            }
-
-            throw new RuntimeException('Errors occurred whilst fetching data from the API. See log.');
-        }
-
-        return $document;
+        Log::error('[' . $error->getStatus() . '] ' . $error->getDetail());
     }
 }
 

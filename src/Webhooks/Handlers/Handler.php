@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers;
 
-use TypedCMS\LaravelStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Contracts\HandlesWebhook;
+use TypedCMS\PHPStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 
 abstract class Handler implements HandlesWebhook
 {

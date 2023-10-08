@@ -112,7 +112,7 @@ return [
     |
     */
     'repositories' => [
-        'resolver' => TypedCMS\LaravelStarterKit\Repositories\Resolvers\BasicResolver::class,
+        'resolver' => TypedCMS\PHPStarterKit\Repositories\Resolvers\BasicResolver::class,
     ],
 
     /*
@@ -136,7 +136,7 @@ return [
     |
     */
     'models' => [
-        'resolver' => TypedCMS\LaravelStarterKit\Models\Resolvers\BasicResolver::class,
+        'resolver' => TypedCMS\PHPStarterKit\Models\Resolvers\BasicResolver::class,
     ],
 ];
 

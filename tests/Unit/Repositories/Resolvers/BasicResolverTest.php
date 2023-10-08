@@ -6,10 +6,11 @@ namespace TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Resolvers;
 
 use TypedCMS\LaravelStarterKit\Repositories\ConstructsRepository;
 use TypedCMS\LaravelStarterKit\Repositories\Repository;
-use TypedCMS\LaravelStarterKit\Repositories\Resolvers\BasicResolver;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooRepository;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
+use TypedCMS\PHPStarterKit\Repositories\Resolvers\BasicResolver;
 use UnexpectedValueException;
+
 use function dirname;
 
 class BasicResolverTest extends TestCase

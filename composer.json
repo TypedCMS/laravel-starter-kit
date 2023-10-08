@@ -1,6 +1,7 @@
 {
     "name": "typedcms/laravel-starter-kit",
-    "description": "The a simple starter kit for using TypedCMS with the Laravel framework.",
+    "description": "A simple starter kit for using TypedCMS with the Laravel framework.",
+    "homepage": "https://typedcms.com/technologies/laravel",
     "keywords": [
         "TypedCMS",
         "Laravel",
@@ -20,9 +21,7 @@
         "ext-json": "*",
         "illuminate/collections": "^9.0|^10.0",
         "illuminate/contracts": "^9.0|^10.0",
-        "guzzlehttp/guzzle": "^7.0",
-        "kamermans/guzzle-oauth2-subscriber": "^1.0",
-        "swisnl/json-api-client": "^2.3"
+        "typedcms/php-starter-kit": "^1.0"
     },
     "require-dev": {
         "php-http/mock-client": "^1.2",
@@ -78,5 +77,5 @@
         "allow-plugins": {
             "php-http/discovery": true
         }
-    }
+    },
 }

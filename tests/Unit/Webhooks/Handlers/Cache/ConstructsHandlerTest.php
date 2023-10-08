@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Tests\Unit\Webhooks\Handlers\Cache;
 
 use Mockery\MockInterface;
-use TypedCMS\LaravelStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooALoopingConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooBLoopingConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooCLoopingConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\ConstructsHandler;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Traveler;
+use TypedCMS\PHPStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 
 class ConstructsHandlerTest extends TestCase
 {
@@ -55,5 +55,7 @@ class ConstructsHandlerTest extends TestCase
                 'id' => 1234,
             ]
         ]), fn () => function () {});
+
+        $this->assertTrue(true);
     }
 }

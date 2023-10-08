@@ -6,6 +6,9 @@ namespace TypedCMS\LaravelStarterKit\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+
+use function abort;
+use function config;
 use function is_string;
 
 class DisplayCodeController extends Controller

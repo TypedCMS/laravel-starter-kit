@@ -118,9 +118,7 @@ trait CachesResponses
 
     protected function getCache(): Repository
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
+        /** @phpstan-ignore-next-line */
         return app('cache')->driver($this->cacheDriver ?? null);
     }
 

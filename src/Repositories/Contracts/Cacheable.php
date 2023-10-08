@@ -7,4 +7,9 @@ namespace TypedCMS\LaravelStarterKit\Repositories\Contracts;
 interface Cacheable
 {
     public function clearCache(string ...$tags): void;
+
+    /**
+     * @return array<class-string<Cacheable>>
+     */
+    public function getCacheClears(string $event): array;
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache;
 
 use Closure;
-use TypedCMS\LaravelStarterKit\Repositories\Repository;
+use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns\ClearsCacheableRepos;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns\ParsesCacheClears;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Handler;
@@ -38,7 +38,7 @@ class EndpointHandler extends Handler
     }
 
     /**
-     * @return array<Repository>
+     * @return array<Cacheable>
      */
     protected function getClearableRepositories(Traveler $traveler): array
     {

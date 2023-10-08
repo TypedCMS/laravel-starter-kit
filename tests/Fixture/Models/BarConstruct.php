@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Tests\Fixture\Models;
 
-use TypedCMS\LaravelStarterKit\Models\Construct;
+use TypedCMS\PHPStarterKit\Models\Construct;
 
 class BarConstruct extends Construct
 {

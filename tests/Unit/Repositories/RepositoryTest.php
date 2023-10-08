@@ -17,10 +17,11 @@ use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Meta;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TypedCMS\LaravelStarterKit\Repositories\Concerns\DeterminesEndpoint;
+use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
+use TypedCMS\LaravelStarterKit\Tests\TestCase;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\CacheableRepository;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableRepository;
-use TypedCMS\LaravelStarterKit\Tests\TestCase;
+use TypedCMS\PHPStarterKit\Repositories\Concerns\DeterminesEndpoint;
 
 class RepositoryTest extends TestCase
 {
@@ -28,17 +29,14 @@ class RepositoryTest extends TestCase
 
     private string $mapiEndpoint;
 
-    public function setUp(): void
+    public function defineEnvironment($app): void
     {
-        parent::setUp();
-
         $this->apiEndpoint = DeterminesEndpoint::$apiEndpoint;
         $this->mapiEndpoint = DeterminesEndpoint::$mapiEndpoint;
 
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set('typedcms.base_uri', '@foo/bar');
+        $app['config']->set('typedcms.base_uri', '@foo/bar');
+
+        StarterKitServiceProvider::configurePHPStarterKit();
     }
 
     /**
@@ -124,7 +122,7 @@ class RepositoryTest extends TestCase
                  * @phpstan-ignore-next-line
                  */
                 $mock->shouldReceive('get')
-                    ->with($this->getApiEndpoint('things?foo=bar&page%5Bnumber%5D=1'))
+                    ->with($this->getApiEndpoint('things?foo=bar&all=0&page%5Bnumber%5D=1'))
                     ->andReturn($document)
                     ->once();
             }
@@ -308,7 +306,7 @@ class RepositoryTest extends TestCase
         $cache = $this->mock(CacheRepository::class,
             function (MockInterface $mock) use ($document, $parameters) {
 
-                $key = $this->makeCacheKey('paginated', $parameters + ['page[number]' => 1]);
+                $key = $this->makeCacheKey('paginated', $parameters + ['all' => false, 'page[number]' => 1]);
 
                 $this->mockCacheRetrievalMethodCalls($mock, $key, $document);
             }
@@ -473,7 +471,7 @@ class RepositoryTest extends TestCase
         $cache = $this->mock(CacheRepository::class,
             function (MockInterface $mock) use ($document, $parameters) {
 
-                $key = $this->makeCacheKey('paginated', $parameters + ['page[number]' => 1]);
+                $key = $this->makeCacheKey('paginated', $parameters + ['all' => false, 'page[number]' => 1]);
 
                 $this->mockCacheStorageMethodCalls($mock, $key, $document);
             }

@@ -4,24 +4,9 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Models;
 
-use Carbon\Carbon;
-use Swis\JsonApi\Client\Item;
+use TypedCMS\PHPStarterKit\Models\Model as BaseModel;
 
-/**
- * @property string $id
- * @property Carbon $created
- * @property Carbon $updated
- */
-class Model extends Item
+class Model extends BaseModel
 {
-    public function getCreatedAttribute(): Carbon
-    {
-        return Carbon::parse($this->attributes['created']);
-    }
 
-    public function getUpdatedAttribute(): Carbon
-    {
-        return Carbon::parse($this->attributes['updated']);
-    }
 }
-

@@ -6,46 +6,38 @@ namespace TypedCMS\LaravelStarterKit\Tests\Feature\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
+use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
 use TypedCMS\LaravelStarterKit\Repositories\GlobalsRepository;
-use TypedCMS\LaravelStarterKit\Repositories\Repository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\BarBazConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\BarConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooBarConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooConstructsRepository;
-use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableGlobalsRepository;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
+use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableGlobalsRepository;
+
 use function realpath;
 
 class ClearCacheControllerTest extends TestCase
 {
     private string $webhookSecret;
 
-    public function setUp(): void
+    public function defineEnvironment($app): void
     {
-        parent::setUp();
-
         $this->webhookSecret = $this->getSecret();
 
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set(
+        $app['config']->set(
             'typedcms.repositories.resolver_path',
             realpath(__DIR__ . '/../../../Fixture/Repositories')
         );
 
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set(
+        $app['config']->set(
             'typedcms.repositories.resolver_namespace',
             'TypedCMS\\LaravelStarterKit\\Tests\\Fixture\\Repositories'
         );
 
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set('typedcms.webhook_secrets.cache', $this->webhookSecret);
+        $app['config']->set('typedcms.webhook_secrets.cache', $this->webhookSecret);
+
+        StarterKitServiceProvider::configurePHPStarterKit();
     }
 
     /**
@@ -65,6 +57,8 @@ class ClearCacheControllerTest extends TestCase
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
             'Signature' => $this->generateTestSigningKey($payload, $this->webhookSecret),
         ]);
+
+        ray($response);
 
         $response->assertStatus(200);
     }

@@ -5,22 +5,20 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Tests\Unit\Models;
 
 use Swis\JsonApi\Client\Meta;
-use TypedCMS\LaravelStarterKit\Models\Construct;
-use TypedCMS\LaravelStarterKit\Models\Resolvers\BasicResolver;
-use TypedCMS\LaravelStarterKit\Models\Resolvers\Contracts\ResolvesModels;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Models\FooConstruct;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
+use TypedCMS\PHPStarterKit\Models\Construct;
+use TypedCMS\PHPStarterKit\Models\Resolvers\BasicResolver;
+use TypedCMS\PHPStarterKit\Models\Resolvers\Contracts\ResolvesModels;
 use UnexpectedValueException;
 
 class ConstructTest extends TestCase
 {
     private Construct $model;
 
-    public function setUp(): void
+    public function defineEnvironment($app): void
     {
-        parent::setUp();
-
-        $this->app->instance(ResolvesModels::class, new class extends BasicResolver {
+        $app->instance(ResolvesModels::class, new class extends BasicResolver {
 
             protected function getPath(): string
             {

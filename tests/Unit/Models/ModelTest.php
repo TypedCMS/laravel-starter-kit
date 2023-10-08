@@ -6,8 +6,8 @@ namespace TypedCMS\LaravelStarterKit\Tests\Unit\Models;
 
 use Carbon\Carbon;
 use Swis\JsonApi\Client\Meta;
-use TypedCMS\LaravelStarterKit\Models\Model;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
+use TypedCMS\PHPStarterKit\Models\Model;
 
 class ModelTest extends TestCase
 {
@@ -16,6 +16,7 @@ class ModelTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->model = (new Model())
             ->setMeta(new Meta(['type' => 'foo']))
             ->setId('123')
