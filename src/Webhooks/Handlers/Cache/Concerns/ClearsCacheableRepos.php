@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns;
 
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
+use TypedCMS\PHPStarterKit\Repositories\Repository;
 
 trait ClearsCacheableRepos
 {
     /**
-     * @param array<Cacheable> $repos
+     * @param array<Repository> $repos
      */
     protected function clearCaches(array $repos): bool
     {

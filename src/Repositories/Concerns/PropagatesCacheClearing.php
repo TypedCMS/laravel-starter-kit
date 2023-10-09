@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Repositories\Concerns;
 
 use Illuminate\Support\Arr;
-use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
+use TypedCMS\LaravelStarterKit\Repositories\Repository;
 
 use function class_exists;
 use function in_array;
@@ -14,7 +14,7 @@ use function is_string;
 trait PropagatesCacheClearing
 {
     /**
-     * @return array<class-string<Cacheable>>
+     * @return array<class-string<Repository>>
      */
     public function getCacheClears(string $event): array
     {
@@ -26,9 +26,9 @@ trait PropagatesCacheClearing
     }
 
     /**
-     * @param array<string>|class-string<Cacheable> $value
+     * @param array<string>|class-string<Repository> $value
      *
-     * @return array<class-string<Cacheable>, array<string>>
+     * @return array<class-string<Repository>, array<string>>
      */
     protected function normalise(array|string $value, int|string $key): array
     {
@@ -48,7 +48,7 @@ trait PropagatesCacheClearing
     }
 
     /**
-     * @param array<string>|class-string<Cacheable> $test
+     * @param array<string>|class-string<Repository> $test
      */
     protected function isClassString(array|string $test): bool
     {

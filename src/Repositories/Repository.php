@@ -12,7 +12,6 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TypedCMS\LaravelStarterKit\Repositories\Concerns\CachesResponses;
 use TypedCMS\LaravelStarterKit\Repositories\Concerns\PropagatesCacheClearing;
-use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 use TypedCMS\PHPStarterKit\Repositories\Repository as BaseRepository;
 
 abstract class Repository extends BaseRepository
@@ -26,7 +25,7 @@ abstract class Repository extends BaseRepository
      * When this repository's cache is cleared, repositories listed here will
      * also be cleared.
      *
-     * @var array<class-string<Cacheable>>|array<class-string<Cacheable>, array<string>>
+     * @var array<class-string<Repository>>|array<class-string<Repository>, array<string>>
      */
     protected array $clears = [];
 

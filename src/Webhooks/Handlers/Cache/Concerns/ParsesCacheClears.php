@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns;
 
-use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 use TypedCMS\PHPStarterKit\Repositories\Repository;
 
 use function app;
 use function collect;
 use function in_array;
-use function method_exists;
 
 trait ParsesCacheClears
 {
@@ -18,7 +16,7 @@ trait ParsesCacheClears
      * @param array<Repository> $repos
      * @param array<class-string<Repository>> $handled
      *
-     * @return array<Cacheable>
+     * @return array<Repository>
      */
     protected function mergePropagatedClears(array $repos, string $event, array $handled = []): array
     {
@@ -34,7 +32,6 @@ trait ParsesCacheClears
         foreach ($parentRepos as $repo) {
 
             if (method_exists($repo, 'getCacheClears')) {
-
                 $childClasses = $childClasses->merge($repo->getCacheClears($event));
             }
         }
