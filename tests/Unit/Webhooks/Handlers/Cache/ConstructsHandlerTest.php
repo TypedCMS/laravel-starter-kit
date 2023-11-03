@@ -18,6 +18,7 @@ class ConstructsHandlerTest extends TestCase
 
     /**
      * @test
+     * @small
      */
     public function itClearsLoopingReposOnce(): void
     {
@@ -28,7 +29,7 @@ class ConstructsHandlerTest extends TestCase
                  * @phpstan-ignore-next-line
                  */
                 $mock->shouldReceive('resolveByBlueprint')
-                    ->with('foo')
+                    ->with('foo-loop')
                     ->andReturn([
                         app(FooALoopingConstructsRepository::class),
                         app(FooBLoopingConstructsRepository::class),
@@ -49,7 +50,7 @@ class ConstructsHandlerTest extends TestCase
             'blueprint' => [
                 'id' => 4321,
                 'name' => 'Foo',
-                'identifier' => 'foo'
+                'identifier' => 'foo-loop'
             ],
             'construct' => [
                 'id' => 1234,

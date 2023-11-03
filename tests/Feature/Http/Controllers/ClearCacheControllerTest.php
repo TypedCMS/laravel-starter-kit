@@ -58,8 +58,6 @@ class ClearCacheControllerTest extends TestCase
             'Signature' => $this->generateTestSigningKey($payload, $this->webhookSecret),
         ]);
 
-        ray($response);
-
         $response->assertStatus(200);
     }
 

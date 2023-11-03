@@ -6,7 +6,7 @@ namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache;
 
 use Closure;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns\ClearsCacheableRepos;
-use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns\ParsesCacheClears;
+use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\Concerns\CollectsCacheClears;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Handler;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Traveler;
 use TypedCMS\PHPStarterKit\Repositories\Repository;
@@ -16,7 +16,7 @@ use function in_array;
 class ConstructsHandler extends Handler
 {
     use ClearsCacheableRepos;
-    use ParsesCacheClears;
+    use CollectsCacheClears;
 
     public function handle(Traveler $traveler, Closure $next): Closure
     {

@@ -9,11 +9,11 @@ use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
 class FooCLoopingConstructsRepository extends ConstructsRepository implements Cacheable
 {
-    protected string $collection = 'foo-index';
+    protected string $collection = 'baz-index';
 
-    protected string $blueprint = 'foo-loop';
+    protected string $blueprint = 'baz-loop';
 
     protected array $clears = [
-        FooALoopingConstructsRepository::class,
+        FooDLoopingConstructsRepository::class,
     ];
 }

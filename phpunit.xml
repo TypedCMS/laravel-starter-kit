@@ -17,6 +17,7 @@
     failOnEmptyTestSuite="true"
     beStrictAboutOutputDuringTests="true"
     verbose="true"
+    enforceTimeLimit="true"
 >
     <testsuites>
         <testsuite name="unit">

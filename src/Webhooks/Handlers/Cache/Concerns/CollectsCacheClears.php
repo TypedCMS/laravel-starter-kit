@@ -10,7 +10,7 @@ use function app;
 use function collect;
 use function in_array;
 
-trait ParsesCacheClears
+trait CollectsCacheClears
 {
     /**
      * @param array<Repository> $repos
@@ -43,7 +43,7 @@ trait ParsesCacheClears
             ->filter()
             ->all();
 
-        $updatedHandled = $parentClasses->merge($childClasses)->unique()->all();
+        $updatedHandled = $parentClasses->merge($childClasses)->merge($handled)->unique()->all();
 
         return collect($this->mergePropagatedClears($childRepos, $event, $updatedHandled))
             ->merge($parentRepos)

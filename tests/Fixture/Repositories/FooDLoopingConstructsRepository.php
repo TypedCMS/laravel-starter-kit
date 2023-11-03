@@ -8,13 +8,13 @@ use TypedCMS\LaravelStarterKit\Repositories\ConstructsRepository;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 use TypedCMS\LaravelStarterKit\Repositories\GlobalsRepository;
 
-class FooBLoopingConstructsRepository extends ConstructsRepository implements Cacheable
+class FooDLoopingConstructsRepository extends ConstructsRepository implements Cacheable
 {
-    protected string $collection = 'bar-index';
+    protected string $collection = 'foobar-index';
 
-    protected string $blueprint = 'bar-loop';
+    protected string $blueprint = 'foobar-loop';
 
     protected array $clears = [
-        FooCLoopingConstructsRepository::class,
+        FooELoopingConstructsRepository::class,
     ];
 }
