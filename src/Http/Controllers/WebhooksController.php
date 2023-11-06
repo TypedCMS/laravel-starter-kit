@@ -14,6 +14,7 @@ use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Result;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Traveler;
 
 use function collect;
+use function config;
 use function count;
 use function response;
 
@@ -37,7 +38,10 @@ abstract class WebhooksController extends Controller
 
         $traveler = $pipeline
             ->send(new Traveler($request->all()))
-            ->through($this->handlers)
+            ->through([
+                ...$this->handlers,
+                ...config('typedcms.webhook_handlers.'.$this->name, []),
+            ])
             ->then(static function (Traveler $traveler): Closure {
 
                 if (count($traveler->getResults()) === 0) {
