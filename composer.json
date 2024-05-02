@@ -21,7 +21,7 @@
         "ext-json": "*",
         "illuminate/collections": "^9.0|^10.0",
         "illuminate/contracts": "^9.0|^10.0",
-        "typedcms/php-starter-kit": "^1.0"
+        "typedcms/php-starter-kit": "^1.2"
     },
     "require-dev": {
         "php-http/mock-client": "^1.2",
