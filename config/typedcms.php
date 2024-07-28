@@ -12,7 +12,7 @@ return [
     | Specify the base URI for your TypedCMS project. You should not include the
     | host (https://api.tcms.io/ or https://mapi.tcms.io/) as this will be
     | automatically prepended for you. Just your team and project identifiers
-    | are required formatted as @team/project.
+    | are required, formatted as @team/project.
     |
     */
     'base_uri' => env('BASE_URI', '@team/project'),
@@ -29,7 +29,7 @@ return [
     | using the connect command. This command and route are only available in
     | your local environment.
     |
-    | Remember your authorisation code will be specific to your user account,
+    | Remember your authorization code will be specific to your user account,
     | not a team or project.
     |
     | You should never share these credentials with anyone!
