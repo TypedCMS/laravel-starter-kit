@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use function dirname;
 use function str_replace;
 
-class MakeModelCommand extends GeneratorCommand
+final class MakeModelCommand extends GeneratorCommand
 {
     protected $name = 'typedcms:make:model';
 
@@ -40,12 +40,12 @@ class MakeModelCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\Models';
+        return $rootNamespace.'\\Models';
     }
 
     protected function getStubPath(string $stub): string
     {
-        return dirname(__DIR__, 3) . '/stubs/' . $stub;
+        return dirname(__DIR__, 3).'/stubs/'.$stub;
     }
 
     protected function buildClass($name): string

@@ -6,7 +6,6 @@ namespace TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories;
 
 use TypedCMS\LaravelStarterKit\Repositories\ConstructsRepository;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
-use TypedCMS\LaravelStarterKit\Repositories\GlobalsRepository;
 
 class FooBLoopingConstructsRepository extends ConstructsRepository implements Cacheable
 {

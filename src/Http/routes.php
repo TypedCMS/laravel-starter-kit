@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use TypedCMS\LaravelStarterKit\Http\Controllers\ClearCacheController;
 use TypedCMS\LaravelStarterKit\Http\Controllers\DisplayCodeController;

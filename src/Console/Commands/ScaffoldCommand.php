@@ -15,7 +15,7 @@ use function str;
 use function str_replace;
 use function trim;
 
-class ScaffoldCommand extends GeneratorCommand
+final class ScaffoldCommand extends GeneratorCommand
 {
     protected $name = 'typedcms:scaffold';
 

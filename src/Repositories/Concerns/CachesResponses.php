@@ -50,17 +50,17 @@ trait CachesResponses
      */
     protected function getCacheKey(string $key, array $parameters, ?string $id = null): string
     {
-        $baseKey = static::class . ':';
+        $baseKey = static::class.':';
 
         if ($this->isMapi()) {
-            $baseKey = 'mapi:' . $baseKey;
+            $baseKey = 'mapi:'.$baseKey;
         }
 
         if ($this->getCachePrefix() !== null) {
-            $baseKey = $this->getCachePrefix() . ':' . $baseKey;
+            $baseKey = $this->getCachePrefix().':'.$baseKey;
         }
 
-        return $baseKey . $key . ':' . ($id !== null ? $id . ':' : '') . serialize($parameters);
+        return $baseKey.$key.':'.($id !== null ? $id.':' : '').serialize($parameters);
     }
 
     /**

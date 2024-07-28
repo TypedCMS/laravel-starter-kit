@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Tests\Unit\Webhooks\Handlers\Cache;
 
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooALoopingConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooBLoopingConstructsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\FooCLoopingConstructsRepository;
@@ -13,21 +14,14 @@ use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Cache\ConstructsHandler;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Traveler;
 use TypedCMS\PHPStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories;
 
-class ConstructsHandlerTest extends TestCase
+final class ConstructsHandlerTest extends TestCase
 {
-
-    /**
-     * @test
-     * @small
-     */
+    #[Test]
     public function itClearsLoopingReposOnce(): void
     {
         /** @var ResolvesRepositories $resolver */
         $resolver = $this->mock(ResolvesRepositories::class,
             function (MockInterface $mock) {
-                /**
-                 * @phpstan-ignore-next-line
-                 */
                 $mock->shouldReceive('resolveByBlueprint')
                     ->with('foo-loop')
                     ->andReturn([

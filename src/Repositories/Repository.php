@@ -41,22 +41,24 @@ abstract class Repository extends BaseRepository
 
     /**
      * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $headers
      */
-    public function all(array $parameters = []): DocumentInterface
+    public function all(array $parameters = [], array $headers = []): DocumentInterface
     {
         $parameters += ['all' => true];
 
         $key = $this->getCacheKey('all', $parameters);
 
-        return $this->cache($key, fn () => parent::all($parameters));
+        return $this->cache($key, fn () => parent::all($parameters, $headers));
     }
 
     /**
      * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $headers
      *
      * @return LengthAwarePaginator<ItemInterface>
      */
-    public function paginated(array $parameters = []): LengthAwarePaginator
+    public function paginated(array $parameters = [], array $headers = []): LengthAwarePaginator
     {
         $page = LengthAwarePaginator::resolveCurrentPage();
 
@@ -64,7 +66,7 @@ abstract class Repository extends BaseRepository
 
         $key = $this->getCacheKey('paginated', $parameters);
 
-        $document = $this->cache($key, fn () => parent::all($parameters));
+        $document = $this->cache($key, fn () => parent::all($parameters, $headers));
 
         return new LengthAwarePaginator(
             $document->getData(),
@@ -77,32 +79,35 @@ abstract class Repository extends BaseRepository
 
     /**
      * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $headers
      */
-    public function take(array $parameters = [])
+    public function take(array $parameters = [], array $headers = []): DocumentInterface
     {
         $key = $this->getCacheKey('take', $parameters);
 
-        return $this->cache($key, fn () => parent::take($parameters));
+        return $this->cache($key, fn () => parent::take($parameters, $headers));
     }
 
     /**
      * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $headers
      */
-    public function find(string $id, array $parameters = []): DocumentInterface
+    public function find(string $id, array $parameters = [], array $headers = []): DocumentInterface
     {
         $key = $this->getCacheKey('find', $parameters, $id);
 
-        return $this->cache($key, fn () => parent::find($id, $parameters));
+        return $this->cache($key, fn () => parent::find($id, $parameters, $headers));
     }
 
     /**
      * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $headers
      */
-    public function findOrFail(string $id, array $parameters = []): DocumentInterface
+    public function findOrFail(string $id, array $parameters = [], array $headers = []): DocumentInterface
     {
         $key = $this->getCacheKey('findOrFail', $parameters, $id);
 
-        return $this->cache($key, fn () => parent::findOrFail($id, $parameters));
+        return $this->cache($key, fn () => parent::findOrFail($id, $parameters, $headers));
     }
 
     protected function handle404Error(DocumentInterface $document): void

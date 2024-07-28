@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers;
 
-class Result
+final class Result
 {
     public function __construct(
         protected string $message,

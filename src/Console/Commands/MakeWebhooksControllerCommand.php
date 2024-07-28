@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use function dirname;
 use function str_replace;
 
-class MakeWebhooksControllerCommand extends GeneratorCommand
+final class MakeWebhooksControllerCommand extends GeneratorCommand
 {
     protected $name = 'typedcms:make:webhooks-controller';
 
@@ -36,12 +36,12 @@ class MakeWebhooksControllerCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\Http\\Controllers\\Webhooks';
+        return $rootNamespace.'\\Http\\Controllers\\Webhooks';
     }
 
     protected function getStubPath(string $stub): string
     {
-        return dirname(__DIR__, 3) . '/stubs/' . $stub;
+        return dirname(__DIR__, 3).'/stubs/'.$stub;
     }
 
     protected function buildClass($name): string

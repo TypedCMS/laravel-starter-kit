@@ -19,16 +19,15 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "illuminate/collections": "^9.0|^10.0",
-        "illuminate/contracts": "^9.0|^10.0",
-        "typedcms/php-starter-kit": "^1.2"
+        "illuminate/collections": "^10.0|^11.0",
+        "illuminate/contracts": "^10.0|^11.0",
+        "typedcms/php-starter-kit": "^2.0"
     },
     "require-dev": {
         "php-http/mock-client": "^1.2",
-        "phpunit/phpunit": "^9.5",
-        "orchestra/testbench": "^v8.12.2",
-        "phpstan/phpstan": "^1.10.38",
-        "nunomaduro/larastan": "^v2.6.4"
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^9.2",
+        "nunomaduro/larastan": "^2.9"
     },
     "autoload": {
         "psr-4": {

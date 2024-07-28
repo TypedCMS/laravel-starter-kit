@@ -4,38 +4,32 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Tests\Feature\Http\Controllers;
 
+use Orchestra\Testbench\Attributes\DefineEnvironment;
+use PHPUnit\Framework\Attributes\Test;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
 
-class DisplayCodeControllerTest extends TestCase
+final class DisplayCodeControllerTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function itIsNotAvailableInProductionEnvironment(): void
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set('app.env', 'production');
-
         $response = $this->get('/display-code?code=foo');
 
         $response->assertStatus(404);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
+    #[DefineEnvironment('localDevEnv')]
     public function itDisplaysCodeInLocalEnvironment(): void
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set('app.env', 'local');
-
         $response = $this->get('/display-code?code=foo');
 
         $response->assertStatus(200);
         $response->assertSee('foo');
+    }
+
+    public function localDevEnv($app): void
+    {
+        $app->config->set('app.env', 'local');
     }
 }

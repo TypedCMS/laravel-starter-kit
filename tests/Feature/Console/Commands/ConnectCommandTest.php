@@ -4,31 +4,20 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Tests\Feature\Console\Commands;
 
+use PHPUnit\Framework\Attributes\Test;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
 
-class ConnectCommandTest extends TestCase
+final class ConnectCommandTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillNotRunInProductionEnvironment(): void
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
-        $this->app->config->set('app.env', 'production');
-
         $this->artisan('typedcms:connect')->assertExitCode(1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRunInLocalEnvironment(): void
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
         $this->app->config->set('app.env', 'local');
 
         $this->artisan('typedcms:connect')
@@ -46,14 +35,9 @@ class ConnectCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itAppendsManagementScopeWhenOptionProvided(): void
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
         $this->app->config->set('app.env', 'local');
 
         $this->artisan('typedcms:connect --management')

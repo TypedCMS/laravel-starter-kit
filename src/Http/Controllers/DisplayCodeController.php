@@ -11,7 +11,7 @@ use function abort;
 use function config;
 use function is_string;
 
-class DisplayCodeController extends Controller
+final class DisplayCodeController extends Controller
 {
     public function __invoke(Request $request): string
     {

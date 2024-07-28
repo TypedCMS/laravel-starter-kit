@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 use function dirname;
 
-class MakeWebhooksHandlerCommand extends GeneratorCommand
+final class MakeWebhooksHandlerCommand extends GeneratorCommand
 {
     protected $name = 'typedcms:make:webhooks-handler';
 
@@ -34,11 +34,11 @@ class MakeWebhooksHandlerCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\Webhooks\\Handlers';
+        return $rootNamespace.'\\Webhooks\\Handlers';
     }
 
     protected function getStubPath(string $stub): string
     {
-        return dirname(__DIR__, 3) . '/stubs/' . $stub;
+        return dirname(__DIR__, 3).'/stubs/'.$stub;
     }
 }

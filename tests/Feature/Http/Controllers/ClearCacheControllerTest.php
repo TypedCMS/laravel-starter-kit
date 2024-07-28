@@ -6,6 +6,7 @@ namespace TypedCMS\LaravelStarterKit\Tests\Feature\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
 use TypedCMS\LaravelStarterKit\Repositories\GlobalsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\BarBazConstructsRepository;
@@ -17,7 +18,7 @@ use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableGlobals
 
 use function realpath;
 
-class ClearCacheControllerTest extends TestCase
+final class ClearCacheControllerTest extends TestCase
 {
     private string $webhookSecret;
 
@@ -40,9 +41,7 @@ class ClearCacheControllerTest extends TestCase
         StarterKitServiceProvider::configurePHPStarterKit();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itAcceptsAValidRequestSignature(): void
     {
         $payload = [
@@ -61,9 +60,7 @@ class ClearCacheControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itRejectsAInvalidRequestSignature(): void
     {
         $payload = [
@@ -88,9 +85,7 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itTakesNoActionForNonClearableDomains(): void
     {
         $payload = [
@@ -110,9 +105,7 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itTakesNoActionForNonClearableConstructsEvents(): void
     {
         $payload = [
@@ -132,9 +125,7 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itTakesNoActionForNonClearableGlobalsEvents(): void
     {
         $payload = [
@@ -154,14 +145,9 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itTakesNoActionWhenNotACacheableGlobalRepository(): void
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
         $this->app->config->set('typedcms.globals_repo', NonCacheableGlobalsRepository::class);
 
         $payload = [
@@ -181,17 +167,12 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itClearsACacheableGlobalRepository(): void
     {
         $this->app->instance(
             GlobalsRepository::class,
             $this->partialMock(GlobalsRepository::class, static function (MockInterface $mock) {
-                /**
-                 * @phpstan-ignore-next-line
-                 */
                 $mock->shouldReceive('clearCache')->once();
             })
         );
@@ -213,9 +194,7 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isClearsCacheableConstructsRepositories(): void
     {
         $this->app->instance(FooConstructsRepository::class,
@@ -226,9 +205,6 @@ class ClearCacheControllerTest extends TestCase
 
         $this->app->instance(FooBarConstructsRepository::class,
             $this->partialMock(FooBarConstructsRepository::class, static function (MockInterface $mock) {
-                /**
-                 * @phpstan-ignore-next-line
-                 */
                 $mock->shouldReceive('clearCache')->once();
             })
         );
@@ -266,33 +242,23 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isPropagatesClearingConstructs(): void
     {
         $this->app->instance(FooBarConstructsRepository::class,
             $this->partialMock(FooBarConstructsRepository::class, static function (MockInterface $mock) {
-                /**
-                 * @phpstan-ignore-next-line
-                 */
+
                 $mock->shouldReceive('clearCache')->once();
-                /**
-                 * @phpstan-ignore-next-line
-                 */
+
                 $mock->shouldReceive('getCacheClears')->andReturn([BarBazConstructsRepository::class])->once();
             })
         );
 
         $this->app->instance(BarBazConstructsRepository::class,
             $this->partialMock(BarBazConstructsRepository::class, static function (MockInterface $mock) {
-                /**
-                 * @phpstan-ignore-next-line
-                 */
+
                 $mock->shouldReceive('clearCache')->once();
-                /**
-                 * @phpstan-ignore-next-line
-                 */
+
                 $mock->shouldReceive('getCacheClears')->andReturn([])->once();
             })
         );
@@ -318,9 +284,7 @@ class ClearCacheControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itTakesNoActionWhenThereAreNoCacheableConstructsRepositories(): void
     {
         $payload = [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers;
 
-class Traveler
+final class Traveler
 {
     /**
      * @var array<Result>
