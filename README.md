@@ -5,6 +5,7 @@
 ![Packagist Downloads](https://img.shields.io/packagist/dt/typedcms/laravel-starter-kit)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedcms/laravel-starter-kit)](https://packagist.org/packages/typedcms/laravel-starter-kit)
 ![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/typedcms/laravel-starter-kit/php)
+![Packagist Dependency Version](https://img.shields.io/packagist/dependency-v/typedcms/laravel-starter-kit/illuminate%2Fcontracts?label=laravel)
 [![Static Badge](https://img.shields.io/badge/honeystone-fa6900)](https://honeystone.com)
 
 Our stater kits are tailored solutions for each platform, unlike the simple API
