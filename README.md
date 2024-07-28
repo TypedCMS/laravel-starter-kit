@@ -17,7 +17,7 @@ source package developers and contributors on which it is built.
 
 _This package is maintained by [Honeystone](https://github.com/honeystone)._
 
-## Installation & Usage Instructions
+## Installation & usage instructions
 
 See the [quickstart guide](https://typedcms.com/technologies/laravel) for installation and usage instructions.
 
@@ -29,6 +29,10 @@ We are committed to delivering high-quality open source packages maintained by t
 like to support our efforts, simply use our packages, recommend them and contribute.
 
 If you need any help with your project, or require any custom development, please [get in touch](https://honeystone.com/contact-us).
+
+## Known issues
+
+- Commands are lacking tests - regression tests must be written in advance of any modification.
 
 ## Changelog
 
