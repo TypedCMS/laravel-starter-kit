@@ -9,7 +9,7 @@
 
 Our stater kits are tailored solutions for each platform, unlike the simple API
 wrappers offered by other vendors. The [TypedCMS](https://typedcms.com) starter
-kit for Laravel provides Eloquent like models, repositories, query caching and a
+kit for Laravel provides Eloquent-like models, repositories, query caching and a
 simple mechanism for adding custom webhook controllers and handlers.
 
 This starter kit wouldn't be possible without the hard work of the many open
