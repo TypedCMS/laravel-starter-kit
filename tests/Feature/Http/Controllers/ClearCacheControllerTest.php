@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace TypedCMS\LaravelStarterKit\Tests\Feature\Http\Controllers;
 
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
+use TypedCMS\LaravelStarterKit\Jobs\RefreshCaches;
 use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
 use TypedCMS\LaravelStarterKit\Repositories\GlobalsRepository;
 use TypedCMS\LaravelStarterKit\Tests\Fixture\Repositories\BarBazConstructsRepository;
@@ -306,6 +308,75 @@ final class ClearCacheControllerTest extends TestCase
         $response->assertJson([
             'status' => 'success',
             'messages' => ['No cacheable construct repositories are configured. No action taken.'],
+        ]);
+    }
+
+    #[Test]
+    public function isQueuesRefreshJobForCacheableRepositories(): void
+    {
+        Queue::fake();
+
+        $this->app->config->set('typedcms.cache_strategy', 'eager');
+
+        $this->app->instance(FooBarConstructsRepository::class,
+            $this->partialMock(FooBarConstructsRepository::class, static function (MockInterface $mock) {
+                $mock->shouldNotReceive('clearCache');
+            }),
+        );
+
+        $payload = [
+            'domain' => 'constructs',
+            'event' => 'update',
+            'blueprint' => [
+                'identifier' => 'foo',
+            ],
+            'construct' => [
+                'id' => 123,
+            ]
+        ];
+
+        $response = $this->postJson('/webhooks/clear-cache', $payload, [
+            'Signature' => $this->generateTestSigningKey($payload, $this->webhookSecret),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'success',
+        ]);
+
+        Queue::assertPushed(RefreshCaches::class);
+    }
+
+    #[Test]
+    public function isFlagsRefreshForCacheableRepositories(): void
+    {
+        $this->app->config->set('typedcms.cache_strategy', 'async');
+
+        $this->app->instance(FooBarConstructsRepository::class,
+            $this->partialMock(FooBarConstructsRepository::class, static function (MockInterface $mock) {
+                $mock->shouldNotReceive('clearCache');
+                $mock->shouldReceive('flagForRefresh')->once();
+            }),
+        );
+
+        $payload = [
+            'domain' => 'constructs',
+            'event' => 'update',
+            'blueprint' => [
+                'identifier' => 'foo',
+            ],
+            'construct' => [
+                'id' => 123,
+            ]
+        ];
+
+        $response = $this->postJson('/webhooks/clear-cache', $payload, [
+            'Signature' => $this->generateTestSigningKey($payload, $this->webhookSecret),
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'success',
         ]);
     }
 

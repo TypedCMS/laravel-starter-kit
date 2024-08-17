@@ -12,12 +12,18 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TypedCMS\LaravelStarterKit\Repositories\Concerns\CachesResponses;
 use TypedCMS\LaravelStarterKit\Repositories\Concerns\PropagatesCacheClearing;
+use TypedCMS\LaravelStarterKit\Repositories\Concerns\TracksCacheInverse;
 use TypedCMS\PHPStarterKit\Repositories\Repository as BaseRepository;
+
+use function compact;
 
 abstract class Repository extends BaseRepository
 {
     use CachesResponses;
+
     use PropagatesCacheClearing;
+
+    use TracksCacheInverse;
 
     protected ?string $cachePrefix = null;
 
@@ -35,11 +41,6 @@ abstract class Repository extends BaseRepository
     protected array $cacheTags = [];
 
     /**
-     * Set expiration to null to cache forever.
-     */
-    protected ?int $cacheExpiresAfter = 60 * 60 * 24 * 7; //7 days
-
-    /**
      * @param array<string, mixed> $parameters
      * @param array<string, mixed> $headers
      */
@@ -47,7 +48,9 @@ abstract class Repository extends BaseRepository
     {
         $parameters += ['all' => true];
 
-        $key = $this->getCacheKey('all', $parameters);
+        $key = $this->getCacheKey(__FUNCTION__, $parameters);
+
+        $this->inverse($key, __FUNCTION__, compact('parameters', 'headers'));
 
         return $this->cache($key, fn () => parent::all($parameters, $headers));
     }
@@ -64,7 +67,9 @@ abstract class Repository extends BaseRepository
 
         $parameters += ['all' => false, 'page[number]' => $page];
 
-        $key = $this->getCacheKey('paginated', $parameters);
+        $key = $this->getCacheKey(__FUNCTION__, $parameters);
+
+        $this->inverse($key, __FUNCTION__, compact('parameters', 'headers'));
 
         $document = $this->cache($key, fn () => parent::all($parameters, $headers));
 
@@ -83,7 +88,9 @@ abstract class Repository extends BaseRepository
      */
     public function take(array $parameters = [], array $headers = []): DocumentInterface
     {
-        $key = $this->getCacheKey('take', $parameters);
+        $key = $this->getCacheKey(__FUNCTION__, $parameters);
+
+        $this->inverse($key, __FUNCTION__, compact('parameters', 'headers'));
 
         return $this->cache($key, fn () => parent::take($parameters, $headers));
     }
@@ -94,7 +101,9 @@ abstract class Repository extends BaseRepository
      */
     public function find(string $id, array $parameters = [], array $headers = []): DocumentInterface
     {
-        $key = $this->getCacheKey('find', $parameters, $id);
+        $key = $this->getCacheKey(__FUNCTION__, $parameters, $id);
+
+        $this->inverse($key, __FUNCTION__, compact('id', 'parameters', 'headers'));
 
         return $this->cache($key, fn () => parent::find($id, $parameters, $headers));
     }
@@ -105,7 +114,9 @@ abstract class Repository extends BaseRepository
      */
     public function findOrFail(string $id, array $parameters = [], array $headers = []): DocumentInterface
     {
-        $key = $this->getCacheKey('findOrFail', $parameters, $id);
+        $key = $this->getCacheKey(__FUNCTION__, $parameters, $id);
+
+        $this->inverse($key, __FUNCTION__, compact('id', 'parameters', 'headers'));
 
         return $this->cache($key, fn () => parent::findOrFail($id, $parameters, $headers));
     }
@@ -117,7 +128,9 @@ abstract class Repository extends BaseRepository
 
     protected function logError(Error $error): void
     {
-        Log::error('[' . $error->getStatus() . '] ' . $error->getDetail());
+        Log::error('['.$error->getStatus().'] '.$error->getDetail(), [
+            'error' => $error,
+        ]);
     }
 }
 

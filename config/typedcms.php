@@ -68,6 +68,38 @@ return [
     'enable_caching' => env('ENABLE_CACHING', true),
 
     /*
+     |---------------------------------------------------------------------------
+     | Repository Cache Clearing Strategy
+     |---------------------------------------------------------------------------
+     |
+     | Three cache clearing strategies are supported by this starter kit:
+     |
+     |  - flush: When the `clear-cache` webhook is received, cached results from
+     |           affected repositories are simply invalidated.
+     |
+     |  - eager: When the `cache-clear` webhook is received, a job is queued to
+     |           fetch fresh data for affected repositories.
+     |
+     |  - async: When the `cache-clear` webhook is received, cached results from
+     |           affected repositories are flagged for invalidation. When the
+     |           data is next requested, a job is queued to fetch the fresh
+     |           data.
+     |
+     */
+    'cache_strategy' => env('CACHE_STRATEGY', 'flush'),
+
+    /*
+     |---------------------------------------------------------------------------
+     | Repository Cache Expiration
+     |---------------------------------------------------------------------------
+     |
+     | Cached repository data will be automatically invalidated after the given
+     | seconds, or never if set to null.
+     |
+     */
+    'cache_expiration' => null,
+
+    /*
     |---------------------------------------------------------------------------
     | Webhook Secrets
     |---------------------------------------------------------------------------

@@ -16,6 +16,7 @@ use function in_array;
 class ConstructsHandler extends Handler
 {
     use ClearsCacheableRepos;
+
     use CollectsCacheClears;
 
     public function handle(Traveler $traveler, Closure $next): Closure

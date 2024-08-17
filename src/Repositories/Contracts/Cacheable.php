@@ -12,4 +12,8 @@ interface Cacheable
      * @return array<class-string<Cacheable>>
      */
     public function getCacheClears(string $event): array;
+
+    public function flagForRefresh(): void;
+
+    public function refresh(): void;
 }

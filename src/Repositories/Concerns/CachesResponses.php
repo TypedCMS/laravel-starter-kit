@@ -9,6 +9,9 @@ use Closure;
 use Illuminate\Cache\Repository;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
+use function config;
+use function property_exists;
+
 trait CachesResponses
 {
     private bool $skipCache = false;
@@ -73,7 +76,11 @@ trait CachesResponses
 
     protected function getCacheExpiry(): ?int
     {
-        return $this->cacheExpiresAfter ?? (60 * 60 * 24 * 7); //7 days
+        if (property_exists($this, 'cacheExpiresAfter')) {
+            return $this->cacheExpiresAfter ?: null;
+        }
+
+        return config('cache_expiration', 60 * 60 * 24 * 7); //7 days
     }
 
     protected function shouldCache(): bool
