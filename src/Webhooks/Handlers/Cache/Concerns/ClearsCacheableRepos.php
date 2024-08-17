@@ -35,7 +35,7 @@ trait ClearsCacheableRepos
     protected function clearWithStrategy(Cacheable $repo): void
     {
         match (config('typedcms.cache_strategy')) {
-            'eager' => RefreshCaches::dispatch($repo),
+            'eager' => RefreshCaches::dispatch($repo::class),
             'async' => $repo->flagForRefresh(),
             default => $repo->clearCache(),
         };

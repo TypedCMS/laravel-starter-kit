@@ -82,7 +82,7 @@ trait TracksCacheInverse
             $this->getCache()->get($this->getFlagKey(), false)
         ) {
 
-            RefreshCaches::dispatch($this);
+            RefreshCaches::dispatch($this::class);
 
             $this->getCache()->forever($this->getFlagKey(), false);
         }

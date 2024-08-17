@@ -8,18 +8,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
+
+use function app;
 
 class RefreshCaches implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public function __construct(private readonly Cacheable $repo)
+    public function __construct(private readonly string $repoClass)
     {
     }
 
     public function handle(): void
     {
-        $this->repo->refresh();
+        app($this->repoClass)->refresh();
     }
 }
