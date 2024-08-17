@@ -507,6 +507,10 @@ final class RepositoryTest extends TestCase
                     ->once();
 
                 $mock->shouldReceive('delete')
+                    ->with($key)
+                    ->once();
+
+                $mock->shouldReceive('delete')
                     ->with(CacheableRepository::class.':inverse-flag')
                     ->once();
             }

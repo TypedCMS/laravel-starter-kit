@@ -37,6 +37,8 @@ trait TracksCacheInverse
 
             try {
 
+                $this->getCache()->delete($key);
+
                 app($class)->$method(...$parameters);
 
                 $this->getCache()->delete($this->getFlagKey());
