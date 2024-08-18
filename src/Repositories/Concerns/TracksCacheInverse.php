@@ -37,7 +37,7 @@ trait TracksCacheInverse
 
             try {
 
-                $this->getCache()->delete($key);
+                $this->getTaggedCache()->delete($key);
 
                 app($class)->$method(...$parameters);
 
@@ -101,6 +101,8 @@ trait TracksCacheInverse
     }
 
     abstract protected function getCache(): Repository;
+
+    abstract protected function getTaggedCache(): Repository;
 
     abstract protected function shouldCache(): bool;
 }
