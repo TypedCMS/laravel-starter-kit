@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0 - 2024-08-17
+
+- Added eager and async cache clearing strategies.
+
 ## 3.0.0 - 2024-07-28
 
 - Now maintained by [Honeystone](https://github.com/honeystone).
