@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Repositories\Concerns;
 
 use Illuminate\Cache\Repository;
-use Illuminate\Support\Facades\Log;
 use Throwable;
 use TypedCMS\LaravelStarterKit\Jobs\RefreshCaches;
-
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
 use function app;
+use function method_exists;
 use function serialize;
 use function unserialize;
 
@@ -26,8 +25,6 @@ trait TracksCacheInverse
 
     public function refresh(): void
     {
-        $lastException = null;
-
         $inverse = $this->getCache()->get($this->getTrackingKey(), []);
 
         // @phpstan-ignore foreach.emptyArray
@@ -44,14 +41,11 @@ trait TracksCacheInverse
                 $this->getCache()->delete($this->getFlagKey());
 
             } catch (Throwable $e) {
-                Log::error($e->getMessage(), ['exception' => $e]);
-                $lastException = $e;
-            }
-        }
 
-        // @phpstan-ignore notIdentical.alwaysFalse
-        if ($lastException !== null) {
-            throw $lastException;
+                if (method_exists($this, 'handleRefreshError')) {
+                    $this->handleRefreshError($e, $key, $method, $parameters);
+                }
+            }
         }
     }
 
