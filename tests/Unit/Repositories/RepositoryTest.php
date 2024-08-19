@@ -17,6 +17,7 @@ use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Meta;
 use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
+use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\AnotherCacheableRepository;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\CacheableRepository;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableRepository;
 use TypedCMS\PHPStarterKit\Repositories\Concerns\DeterminesEndpoint;
@@ -508,6 +509,62 @@ final class RepositoryTest extends TestCase
 
                 $mock->shouldReceive('delete')
                     ->with($key)
+                    ->once();
+
+                $mock->shouldReceive('delete')
+                    ->with(CacheableRepository::class.':inverse-flag')
+                    ->once();
+            }
+        );
+
+        $this->registerMockCacheManager($cache);
+
+        /** @var DocumentClientInterface $client */
+        $client = $this->mock(DocumentClientInterface::class);
+
+        $repository = new CacheableRepository($client, new DocumentFactory());
+
+        $repository->refresh();
+    }
+
+    #[Test]
+    public function itDoesNotRefreshOtherCachesFromInverse(): void
+    {
+        $parameters =  ['foo' => 'bar', 'all' => true];
+
+        $this->app->instance(CacheableRepository::class,
+            $this->mock(CacheableRepository::class, static function (MockInterface $mock) use ($parameters) {
+
+                $mock->shouldReceive('all')
+                    ->with($parameters, [])
+                    ->once();
+
+                $mock->shouldNotReceive('paginate');
+            }),
+        );
+
+        /** @var CacheRepository $cache */
+        $cache = $this->mock(CacheRepository::class,
+            function (MockInterface $mock) use ($parameters) {
+
+                $mock->shouldReceive('get')
+                    ->with(CacheableRepository::class.':inverse', [])
+                    ->andReturn([
+                        'foo' => serialize([
+                            CacheableRepository::class,
+                            'all',
+                            ['parameters' => $parameters, 'headers' => []],
+                        ]),
+                        'bar' => serialize([
+                            AnotherCacheableRepository::class,
+                            'paginate',
+                            ['parameters' => [], 'headers' => []],
+                        ]),
+                    ])
+                    ->once();
+
+                $mock->shouldReceive('delete')
+                    ->with('foo')
                     ->once();
 
                 $mock->shouldReceive('delete')
