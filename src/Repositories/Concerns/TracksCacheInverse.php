@@ -7,6 +7,7 @@ namespace TypedCMS\LaravelStarterKit\Repositories\Concerns;
 use Illuminate\Cache\Repository;
 use Throwable;
 use TypedCMS\LaravelStarterKit\Jobs\RefreshCaches;
+use TypedCMS\LaravelStarterKit\Jobs\RefreshSingleCache;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
 use function app;
@@ -30,21 +31,38 @@ trait TracksCacheInverse
         // @phpstan-ignore foreach.emptyArray
         foreach ($inverse as $key => $callable) {
 
-            [$class, $method, $parameters] = unserialize($callable);
+            $this->refreshOne($key, ...unserialize($callable));
+        }
+    }
 
-            try {
+    public function dispatchRefresh(): void
+    {
+        $inverse = $this->getCache()->get($this->getTrackingKey(), []);
 
-                $this->getTaggedCache()->delete($key);
+        // @phpstan-ignore foreach.emptyArray
+        foreach ($inverse as $key => $callable) {
 
-                app($class)->$method(...$parameters);
+            RefreshSingleCache::dispatch(static::class, $key, ...unserialize($callable));
+        }
+    }
 
-                $this->getCache()->delete($this->getFlagKey());
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    public function refreshOne(string $key, string $method, array $parameters): void
+    {
+        try {
 
-            } catch (Throwable $e) {
+            $this->getTaggedCache()->delete($key);
 
-                if (method_exists($this, 'handleRefreshError')) {
-                    $this->handleRefreshError($e, $key, $method, $parameters);
-                }
+            app(static::class)->$method(...$parameters);
+
+            $this->getCache()->delete($this->getFlagKey());
+
+        } catch (Throwable $e) {
+
+            if (method_exists($this, 'handleRefreshError')) {
+                $this->handleRefreshError($e, $key, $method, $parameters);
             }
         }
     }
@@ -63,7 +81,7 @@ trait TracksCacheInverse
         // @phpstan-ignore function.impossibleType
         if (!array_key_exists($key, $inverse)) {
 
-            $inverse[$key] = serialize([static::class, $method, $parameters]);
+            $inverse[$key] = serialize([$method, $parameters]);
 
             $this->getCache()->forever($this->getTrackingKey(), $inverse);
         }
@@ -78,7 +96,7 @@ trait TracksCacheInverse
             $this->getCache()->get($this->getFlagKey(), false)
         ) {
 
-            RefreshCaches::dispatch($this::class);
+            RefreshCaches::dispatch(static::class);
 
             $this->getCache()->forever($this->getFlagKey(), false);
         }

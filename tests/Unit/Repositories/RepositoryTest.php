@@ -17,7 +17,6 @@ use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Meta;
 use TypedCMS\LaravelStarterKit\Providers\StarterKitServiceProvider;
 use TypedCMS\LaravelStarterKit\Tests\TestCase;
-use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\AnotherCacheableRepository;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\CacheableRepository;
 use TypedCMS\LaravelStarterKit\Tests\Unit\Repositories\Fakes\NonCacheableRepository;
 use TypedCMS\PHPStarterKit\Repositories\Concerns\DeterminesEndpoint;
@@ -431,7 +430,6 @@ final class RepositoryTest extends TestCase
                 $mock->shouldReceive('forever')
                     ->with(CacheableRepository::class.':inverse', [
                         $key => serialize([
-                            CacheableRepository::class,
                             'all',
                             ['parameters' => $parameters, 'headers' => []],
                         ]),
@@ -500,7 +498,6 @@ final class RepositoryTest extends TestCase
                     ->with(CacheableRepository::class.':inverse', [])
                     ->andReturn([
                         $key => serialize([
-                            CacheableRepository::class,
                             'all',
                             ['parameters' => $parameters, 'headers' => []],
                         ]),
@@ -551,12 +548,10 @@ final class RepositoryTest extends TestCase
                     ->with(CacheableRepository::class.':inverse', [])
                     ->andReturn([
                         'foo' => serialize([
-                            CacheableRepository::class,
                             'all',
                             ['parameters' => $parameters, 'headers' => []],
                         ]),
                         'bar' => serialize([
-                            AnotherCacheableRepository::class,
                             'paginate',
                             ['parameters' => [], 'headers' => []],
                         ]),

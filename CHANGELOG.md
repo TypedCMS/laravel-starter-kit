@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0 - 2024-08-21
+
+- Added granular queueing for cache refreshes.
+
 ## 3.1.0 - 2024-08-17
 
 - Added eager and async cache clearing strategies.

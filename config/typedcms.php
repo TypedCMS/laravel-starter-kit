@@ -100,6 +100,17 @@ return [
     'cache_expiration' => null,
 
     /*
+     |---------------------------------------------------------------------------
+     | Granular Cache Refresh Queueing
+     |---------------------------------------------------------------------------
+     |
+     | When enabled, each refresh call is broken into a separate queued job.
+     | This can be used to allow many refresh jobs to take place simultaneously.
+     |
+     */
+    'granular_cache_queueing' => false,
+
+    /*
     |---------------------------------------------------------------------------
     | Webhook Secrets
     |---------------------------------------------------------------------------
