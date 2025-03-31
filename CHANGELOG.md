@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.0 - 2025-03-31
+
+- Upgraded dependencies for Laravel 12.
+- Fixed code style issues.
+- Log cache refresh errors by default.
+
 ## 3.2.0 - 2024-08-21
 
 - Added granular queueing for cache refreshes.
