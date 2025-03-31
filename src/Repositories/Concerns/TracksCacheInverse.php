@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace TypedCMS\LaravelStarterKit\Repositories\Concerns;
 
 use Illuminate\Cache\Repository;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use TypedCMS\LaravelStarterKit\Jobs\RefreshCaches;
 use TypedCMS\LaravelStarterKit\Jobs\RefreshSingleCache;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
 use function app;
+use function compact;
 use function method_exists;
 use function serialize;
 use function unserialize;
@@ -62,8 +64,13 @@ trait TracksCacheInverse
         } catch (Throwable $e) {
 
             if (method_exists($this, 'handleRefreshError')) {
+
                 $this->handleRefreshError($e, $key, $method, $parameters);
+
+                return;
             }
+
+            Log::error($e->getMessage(), compact('e'));
         }
     }
 
