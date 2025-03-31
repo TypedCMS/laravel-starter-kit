@@ -7,7 +7,7 @@ namespace {{ namespace }};
 use TypedCMS\LaravelStarterKit\Repositories\ConstructsRepository;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
-class {{ class }} extends ConstructsRepository {{ cacheable }}
+final class {{ class }} extends ConstructsRepository {{ cacheable }}
 {
     protected string $collection = '{{ collection }}';
 

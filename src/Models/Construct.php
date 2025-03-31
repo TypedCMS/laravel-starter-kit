@@ -6,7 +6,4 @@ namespace TypedCMS\LaravelStarterKit\Models;
 
 use TypedCMS\PHPStarterKit\Models\Construct as BaseConstruct;
 
-class Construct extends BaseConstruct
-{
-
-}
+class Construct extends BaseConstruct {}

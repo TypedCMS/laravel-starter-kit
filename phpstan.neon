@@ -1,7 +1,17 @@
-includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
-
 parameters:
-	level: 6
-	paths:
-		- src
+    level: 6
+    paths:
+        - src
+
+    tmpDir: build/phpstan
+
+    checkModelProperties: true
+
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
+
+    polluteScopeWithLoopInitialAssignments: false
+    polluteScopeWithAlwaysIterableForeach: false
+    checkExplicitMixedMissingReturn: true
+    checkFunctionNameCase: true
+

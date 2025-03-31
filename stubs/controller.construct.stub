@@ -11,11 +11,9 @@ use Illuminate\Http\Request;
 use function compact;
 use function view;
 
-class {{ class }}
+final class {{ class }}
 {
-    public function __construct(private {{ repository }} $repo)
-    {
-    }
+    public function __construct(private {{ repository }} $repo) {}
 
     public function __invoke(string $identifier, Request $request): View
     {

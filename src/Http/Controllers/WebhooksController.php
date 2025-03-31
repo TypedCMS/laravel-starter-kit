@@ -79,7 +79,7 @@ abstract class WebhooksController extends Controller
 
     protected function checkSigningKey(Request $request): bool
     {
-        $secret = config('typedcms.webhook_secrets.' . $this->name);
+        $secret = config('typedcms.webhook_secrets.'.$this->name);
 
         $expectedSignature = $this->generateSigningKey($request->getContent(), $secret);
 

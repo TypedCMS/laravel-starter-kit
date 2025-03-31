@@ -30,7 +30,7 @@ final class ClearCacheControllerTest extends TestCase
 
         $app['config']->set(
             'typedcms.repositories.resolver_path',
-            realpath(__DIR__ . '/../../../Fixture/Repositories')
+            realpath(__DIR__.'/../../../Fixture/Repositories')
         );
 
         $app['config']->set(
@@ -52,7 +52,7 @@ final class ClearCacheControllerTest extends TestCase
             'blueprint' => [
                 'id' => 123,
                 'identifier' => 'foo',
-            ]
+            ],
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -71,7 +71,7 @@ final class ClearCacheControllerTest extends TestCase
             'blueprint' => [
                 'id' => 123,
                 'type' => 'foo',
-            ]
+            ],
         ];
 
         $mitmPayload = $payload + ['sneaky' => 'sneaky'];
@@ -93,7 +93,7 @@ final class ClearCacheControllerTest extends TestCase
         $payload = [
             'domain' => 'foobar',
             'event' => 'create',
-            //...
+            // ...
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -113,7 +113,7 @@ final class ClearCacheControllerTest extends TestCase
         $payload = [
             'domain' => 'constructs',
             'event' => 'foo',
-            //...
+            // ...
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -133,7 +133,7 @@ final class ClearCacheControllerTest extends TestCase
         $payload = [
             'domain' => 'globals',
             'event' => 'foo',
-            //...
+            // ...
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -155,7 +155,7 @@ final class ClearCacheControllerTest extends TestCase
         $payload = [
             'domain' => 'globals',
             'event' => 'update',
-            //...
+            // ...
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -182,7 +182,7 @@ final class ClearCacheControllerTest extends TestCase
         $payload = [
             'domain' => 'globals',
             'event' => 'update',
-            //...
+            // ...
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -231,7 +231,7 @@ final class ClearCacheControllerTest extends TestCase
             ],
             'construct' => [
                 'id' => 123,
-            ]
+            ],
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -273,7 +273,7 @@ final class ClearCacheControllerTest extends TestCase
             ],
             'construct' => [
                 'id' => 123,
-            ]
+            ],
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -297,7 +297,7 @@ final class ClearCacheControllerTest extends TestCase
             ],
             'construct' => [
                 'id' => 123,
-            ]
+            ],
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -332,7 +332,7 @@ final class ClearCacheControllerTest extends TestCase
             ],
             'construct' => [
                 'id' => 123,
-            ]
+            ],
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [
@@ -367,7 +367,7 @@ final class ClearCacheControllerTest extends TestCase
             ],
             'construct' => [
                 'id' => 123,
-            ]
+            ],
         ];
 
         $response = $this->postJson('/webhooks/clear-cache', $payload, [

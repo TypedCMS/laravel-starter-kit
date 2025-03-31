@@ -19,7 +19,7 @@ final class MakeWebhooksControllerCommand extends GeneratorCommand
     protected $type = 'Controller';
 
     /**
-     * @return array<array<int|string>>
+     * @return array<array<int|string|null>>
      */
     protected function getOptions(): array
     {

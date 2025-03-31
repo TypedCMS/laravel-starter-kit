@@ -43,7 +43,7 @@ final class RepositoryTest extends TestCase
         $collection = (new Collection([$item]));
 
         $meta = new Meta(['total' => 1, 'perPage' => 15]);
-        $document = (new DocumentFactory())->make($collection)->setMeta($meta);
+        $document = (new DocumentFactory)->make($collection)->setMeta($meta);
 
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class,
@@ -55,7 +55,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new NonCacheableRepository($client, new DocumentFactory());
+        $repository = new NonCacheableRepository($client, new DocumentFactory);
 
         $paginator = new LengthAwarePaginator($collection, 1, 15, 1, ['path' => request()->url()]);
 
@@ -65,7 +65,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itGetsAllFromCache(): void
     {
-        $document = new Document();
+        $document = new Document;
         $parameters = ['foo' => 'bar'];
 
         /** @var CacheRepository $cache */
@@ -87,7 +87,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->all($parameters));
     }
@@ -99,7 +99,7 @@ final class RepositoryTest extends TestCase
         $collection = (new Collection([$item]));
 
         $meta = new Meta(['total' => 1, 'perPage' => 15]);
-        $document = (new DocumentFactory())->make($collection)->setMeta($meta);
+        $document = (new DocumentFactory)->make($collection)->setMeta($meta);
 
         $parameters = ['foo' => 'bar'];
 
@@ -122,7 +122,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $repository->paginated($parameters));
     }
@@ -130,7 +130,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itTakesOneFromCache(): void
     {
-        $document = new Document();
+        $document = new Document;
         $parameters = ['foo' => 'bar'];
 
         /** @var CacheRepository $cache */
@@ -152,7 +152,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->take($parameters));
     }
@@ -160,7 +160,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itFindsOneFromCache(): void
     {
-        $document = new Document();
+        $document = new Document;
 
         $id = '123';
         $parameters = ['foo' => 'bar'];
@@ -184,7 +184,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->find($id, $parameters));
     }
@@ -192,7 +192,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itFindsOneNotFailedFromCache(): void
     {
-        $document = new Document();
+        $document = new Document;
 
         $id = '123';
         $parameters = ['foo' => 'bar'];
@@ -216,7 +216,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->findOrFail($id, $parameters));
     }
@@ -224,7 +224,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itPutsAllInCache(): void
     {
-        $document = new Document();
+        $document = new Document;
         $parameters = ['foo' => 'bar'];
 
         /** @var CacheRepository $cache */
@@ -242,7 +242,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->all($parameters));
     }
@@ -254,7 +254,7 @@ final class RepositoryTest extends TestCase
         $collection = (new Collection([$item]));
 
         $meta = new Meta(['total' => 1, 'perPage' => 15]);
-        $document = (new DocumentFactory())->make($collection)->setMeta($meta);
+        $document = (new DocumentFactory)->make($collection)->setMeta($meta);
 
         $parameters = ['foo' => 'bar'];
 
@@ -273,7 +273,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $repository->paginated($parameters));
     }
@@ -281,7 +281,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itPutsTakenInCache(): void
     {
-        $document = new Document();
+        $document = new Document;
         $parameters = ['foo' => 'bar'];
 
         /** @var CacheRepository $cache */
@@ -299,7 +299,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->take($parameters));
     }
@@ -307,7 +307,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itPutsFoundInCache(): void
     {
-        $document = new Document();
+        $document = new Document;
 
         $id = '123';
         $parameters = ['foo' => 'bar'];
@@ -316,7 +316,7 @@ final class RepositoryTest extends TestCase
         $cache = $this->mock(CacheRepository::class,
             function (MockInterface $mock) use ($document, $id, $parameters) {
 
-                $key = $this->makeCacheKey('find:' . $id, $parameters);
+                $key = $this->makeCacheKey('find:'.$id, $parameters);
 
                 $this->mockCacheStorageMethodCalls($mock, $key, $document);
             }
@@ -327,7 +327,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->find($id, $parameters));
     }
@@ -335,7 +335,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itPutsFoundNotFailedInCache(): void
     {
-        $document = new Document();
+        $document = new Document;
 
         $id = '123';
         $parameters = ['foo' => 'bar'];
@@ -344,7 +344,7 @@ final class RepositoryTest extends TestCase
         $cache = $this->mock(CacheRepository::class,
             function (MockInterface $mock) use ($document, $id, $parameters) {
 
-                $key = $this->makeCacheKey('findOrFail:' . $id, $parameters);
+                $key = $this->makeCacheKey('findOrFail:'.$id, $parameters);
 
                 $this->mockCacheStorageMethodCalls($mock, $key, $document);
             }
@@ -355,7 +355,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->findOrFail($id, $parameters));
     }
@@ -363,7 +363,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itPutsFoundOnMapiInCache(): void
     {
-        $document = new Document();
+        $document = new Document;
 
         $id = '123';
         $parameters = ['foo' => 'bar'];
@@ -372,7 +372,7 @@ final class RepositoryTest extends TestCase
         $cache = $this->mock(CacheRepository::class,
             function (MockInterface $mock) use ($document, $id, $parameters) {
 
-                $key = $this->makeCacheKey('find:' . $id, $parameters, true);
+                $key = $this->makeCacheKey('find:'.$id, $parameters, true);
 
                 $this->mockCacheStorageMethodCalls($mock, $key, $document);
             }
@@ -383,7 +383,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->mapi()->find($id, $parameters));
     }
@@ -391,7 +391,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itTracksCacheInverse(): void
     {
-        $document = new Document();
+        $document = new Document;
         $parameters = ['foo' => 'bar'];
 
         /** @var CacheRepository $cache */
@@ -447,7 +447,7 @@ final class RepositoryTest extends TestCase
             }
         );
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->all($parameters));
     }
@@ -470,7 +470,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $repository->flagForRefresh();
     }
@@ -478,7 +478,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itRefreshesCacheFromInverse(): void
     {
-        $parameters =  ['foo' => 'bar', 'all' => true];
+        $parameters = ['foo' => 'bar', 'all' => true];
 
         $this->app->instance(CacheableRepository::class,
             $this->mock(CacheableRepository::class, static function (MockInterface $mock) use ($parameters) {
@@ -519,7 +519,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $repository->refresh();
     }
@@ -527,7 +527,7 @@ final class RepositoryTest extends TestCase
     #[Test]
     public function itDoesNotRefreshOtherCachesFromInverse(): void
     {
-        $parameters =  ['foo' => 'bar', 'all' => true];
+        $parameters = ['foo' => 'bar', 'all' => true];
 
         $this->app->instance(CacheableRepository::class,
             $this->mock(CacheableRepository::class, static function (MockInterface $mock) use ($parameters) {
@@ -573,7 +573,7 @@ final class RepositoryTest extends TestCase
         /** @var DocumentClientInterface $client */
         $client = $this->mock(DocumentClientInterface::class);
 
-        $repository = new CacheableRepository($client, new DocumentFactory());
+        $repository = new CacheableRepository($client, new DocumentFactory);
 
         $repository->refresh();
     }

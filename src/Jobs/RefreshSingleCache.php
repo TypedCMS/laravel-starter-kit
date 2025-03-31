@@ -23,8 +23,7 @@ class RefreshSingleCache implements ShouldQueue
         private readonly string $key,
         private readonly string $methods,
         private readonly array $parameters,
-    ) {
-    }
+    ) {}
 
     public function handle(): void
     {

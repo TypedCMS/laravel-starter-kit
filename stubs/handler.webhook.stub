@@ -8,7 +8,7 @@ use Closure;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Handler;
 use TypedCMS\LaravelStarterKit\Webhooks\Handlers\Helpers\Traveler;
 
-class {{ class }} extends Handler
+final class {{ class }} extends Handler
 {
     public function handle(Traveler $traveler, Closure $next): Closure
     {

@@ -19,7 +19,7 @@ final class MakeRepositoryCommand extends GeneratorCommand
     protected $type = 'Repository';
 
     /**
-     * @return array<array<int|string>>
+     * @return array<array<int|string|null>>
      */
     protected function getOptions(): array
     {

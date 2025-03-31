@@ -49,7 +49,7 @@ final class ScaffoldCommand extends GeneratorCommand
     }
 
     /**
-     * @return array<array<int|string>>
+     * @return array<array<int|string|null>>
      */
     protected function getOptions(): array
     {
@@ -61,7 +61,7 @@ final class ScaffoldCommand extends GeneratorCommand
 
     protected function getStub(): string
     {
-        return match($this->building) {
+        return match ($this->building) {
             default => $this->getStubPath('controller.construct.stub'),
             'controller.collection' => $this->getStubPath('controller.collection.stub'),
         };
@@ -117,7 +117,6 @@ final class ScaffoldCommand extends GeneratorCommand
         ]);
     }
 
-
     protected function makeConstructController(): void
     {
         $this->building = 'controller.construct';
@@ -144,9 +143,6 @@ final class ScaffoldCommand extends GeneratorCommand
         $this->generateClass($name, 'Collection controller');
     }
 
-    /**
-     * @param string $name
-     */
     protected function generateClass(string $name, string $type): void
     {
         $name = $this->qualifyClass($name);
@@ -155,6 +151,7 @@ final class ScaffoldCommand extends GeneratorCommand
 
         if (!$this->option('force') && $this->alreadyExists($name)) {
             $this->components->error($type.' already exists.');
+
             return;
         }
 

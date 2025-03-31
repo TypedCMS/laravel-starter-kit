@@ -10,7 +10,6 @@ use TypedCMS\PHPStarterKit\Repositories\Contracts\CollectsConstructs;
 
 class ConstructsRepository extends Repository implements CollectsConstructs
 {
-    use UsesConstructsEndpoint;
-
     use ProvidesHierarchicalConstructs;
+    use UsesConstructsEndpoint;
 }

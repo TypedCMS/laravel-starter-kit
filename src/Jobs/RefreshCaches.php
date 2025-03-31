@@ -16,9 +16,7 @@ class RefreshCaches implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable;
 
-    public function __construct(private readonly string $repoClass)
-    {
-    }
+    public function __construct(private readonly string $repoClass) {}
 
     public function handle(): void
     {

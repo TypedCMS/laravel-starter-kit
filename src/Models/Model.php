@@ -6,7 +6,4 @@ namespace TypedCMS\LaravelStarterKit\Models;
 
 use TypedCMS\PHPStarterKit\Models\Model as BaseModel;
 
-class Model extends BaseModel
-{
-
-}
+class Model extends BaseModel {}

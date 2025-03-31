@@ -18,7 +18,7 @@ final class MakeWebhooksHandlerCommand extends GeneratorCommand
     protected $type = 'Handler';
 
     /**
-     * @return array<array<int|string>>
+     * @return array<array<int|string|null>>
      */
     protected function getOptions(): array
     {

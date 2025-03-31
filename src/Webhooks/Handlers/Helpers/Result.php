@@ -9,7 +9,7 @@ final class Result
     public function __construct(
         protected string $message,
         protected bool $error = false,
-    ) { }
+    ) {}
 
     public function getMessage(): string
     {

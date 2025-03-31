@@ -80,7 +80,7 @@ trait CachesResponses
             return $this->cacheExpiresAfter ?: null;
         }
 
-        return config('cache_expiration', 60 * 60 * 24 * 7); //7 days
+        return config('cache_expiration', 60 * 60 * 24 * 7); // 7 days
     }
 
     protected function shouldCache(): bool

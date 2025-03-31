@@ -7,7 +7,7 @@ namespace {{ namespace }};
 use TypedCMS\LaravelStarterKit\Repositories\Repository;
 use TypedCMS\LaravelStarterKit\Repositories\Contracts\Cacheable;
 
-class {{ class }} extends Repository {{ cacheable }}
+final class {{ class }} extends Repository {{ cacheable }}
 {
     protected $endpoint = '{{ endpoint }}';
 

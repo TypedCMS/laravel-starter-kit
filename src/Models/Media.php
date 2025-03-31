@@ -6,7 +6,4 @@ namespace TypedCMS\LaravelStarterKit\Models;
 
 use TypedCMS\PHPStarterKit\Models\Media as BaseMedia;
 
-class Media extends BaseMedia
-{
-
-}
+class Media extends BaseMedia {}

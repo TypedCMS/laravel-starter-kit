@@ -20,9 +20,7 @@ use function compact;
 abstract class Repository extends BaseRepository
 {
     use CachesResponses;
-
     use PropagatesCacheClearing;
-
     use TracksCacheInverse;
 
     protected ?string $cachePrefix = null;
@@ -123,7 +121,7 @@ abstract class Repository extends BaseRepository
 
     protected function handle404Error(DocumentInterface $document): void
     {
-        throw new NotFoundHttpException();
+        throw new NotFoundHttpException;
     }
 
     protected function logError(Error $error): void
@@ -133,4 +131,3 @@ abstract class Repository extends BaseRepository
         ]);
     }
 }
-

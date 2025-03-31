@@ -35,16 +35,16 @@ final class ConnectCommand extends Command
         }
 
         $id = $this->anticipate('Please provide your OAuth Client ID', [
-            config('typedcms.oauth.client_id')
+            config('typedcms.oauth.client_id'),
         ], config('typedcms.oauth.client_id'));
 
         $secret = $this->anticipate('Please provide OAuth Client Secret', [
-            config('typedcms.oauth.client_secret')
+            config('typedcms.oauth.client_secret'),
         ], config('typedcms.oauth.client_secret'));
 
         $uri = $this->anticipate('Please provide a redirect URI', [
             config('typedcms.oauth.redirect_uri'),
-            config('app.url').'/display-code'
+            config('app.url').'/display-code',
         ], config('typedcms.oauth.redirect_uri'));
 
         $query = http_build_query([

@@ -39,16 +39,16 @@ final class ConstructsHandlerTest extends TestCase
             'domain' => 'constructs',
             'project' => [
                 'name' => 'Website',
-                'identifier' => 'website'
+                'identifier' => 'website',
             ],
             'blueprint' => [
                 'id' => 4321,
                 'name' => 'Foo',
-                'identifier' => 'foo-loop'
+                'identifier' => 'foo-loop',
             ],
             'construct' => [
                 'id' => 1234,
-            ]
+            ],
         ]), fn () => function () {});
 
         $this->assertTrue(true);

@@ -31,7 +31,7 @@ final class RefreshTokenCommand extends Command
         $tokenPersistence = new FileTokenPersistence(StarterKitServiceProvider::getTokenPath());
 
         /** @var RawToken|null $rawToken */
-        $rawToken = $tokenPersistence->restoreToken(new RawToken());
+        $rawToken = $tokenPersistence->restoreToken(new RawToken);
 
         if ($rawToken === null) {
 
@@ -42,7 +42,7 @@ final class RefreshTokenCommand extends Command
 
         if (
             $this->option('expiring') &&
-            Carbon::make((new DateTime())->setTimestamp($rawToken->getExpiresAt()))->isAfter(Carbon::now()->addWeek())
+            Carbon::make((new DateTime)->setTimestamp($rawToken->getExpiresAt()))->isAfter(Carbon::now()->addWeek())
         ) {
 
             $this->info('Access token expires more than 7 days from now.');
@@ -62,7 +62,7 @@ final class RefreshTokenCommand extends Command
 
         try {
             $rawData = (new RefreshToken($authClient, $authConfig))
-                ->getRawData(new BasicAuth(), $rawToken->getRefreshToken());
+                ->getRawData(new BasicAuth, $rawToken->getRefreshToken());
 
         } catch (BadResponseException) {
 
@@ -71,7 +71,7 @@ final class RefreshTokenCommand extends Command
             return 1;
         }
 
-        $tokenPersistence->saveToken((new RawTokenFactory())($rawData));
+        $tokenPersistence->saveToken((new RawTokenFactory)($rawData));
 
         $this->info('Access token refreshed!');
 

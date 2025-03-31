@@ -6,7 +6,7 @@ namespace {{ namespace }};
 
 use TypedCMS\LaravelStarterKit\Models\Construct;
 
-class {{ class }} extends Construct
+final class {{ class }} extends Construct
 {
     protected string $blueprint = '{{ blueprint }}';
 }

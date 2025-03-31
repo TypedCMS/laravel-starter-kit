@@ -9,7 +9,7 @@ use TypedCMS\PHPStarterKit\Repositories\Resolvers\Contracts\ResolvesRepositories
 
 abstract class Handler implements HandlesWebhook
 {
-    public function __construct(protected ResolvesRepositories $resolver) { }
+    public function __construct(protected ResolvesRepositories $resolver) {}
 
     protected function getResolver(): ResolvesRepositories
     {

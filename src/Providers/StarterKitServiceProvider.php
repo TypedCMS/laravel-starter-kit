@@ -77,7 +77,7 @@ class StarterKitServiceProvider extends ServiceProvider
         $this->publishes([dirname(__DIR__, 2).'/config/' => config_path()], 'config');
     }
 
-    protected function LoadRoutes(): void
+    protected function loadRoutes(): void
     {
         $this->loadRoutesFrom(dirname(__DIR__).'/Http/routes.php');
     }
@@ -93,4 +93,3 @@ class StarterKitServiceProvider extends ServiceProvider
         $this->commands(ScaffoldCommand::class);
     }
 }
-
